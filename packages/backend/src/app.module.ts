@@ -5,9 +5,8 @@ import { DatabaseModule } from "./database/database.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { APP_FILTER, APP_GUARD, Reflector } from "@nestjs/core";
-import { AtGuard } from "./common/guards/at.guard";
 import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
-import { RolesGuard } from "./common/guards/roles.guard";
+import { AtGuard } from "./auth/guards/at.guard";
 
 @Module({
   imports: [
@@ -26,10 +25,6 @@ import { RolesGuard } from "./common/guards/roles.guard";
 			provide: APP_GUARD,
 			useClass: AtGuard,
 		},
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
 		{
 			provide: APP_FILTER,
 			useClass: AllExceptionsFilter,

@@ -1,6 +1,6 @@
 import { Role } from "src/common/enums/role.enum";
 
-export class MeDto {
+export class UserDto {
 	id: string;
 	email: string;
 	name: string;
