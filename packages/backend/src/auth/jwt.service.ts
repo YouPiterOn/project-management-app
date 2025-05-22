@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService as NestJwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Role } from 'src/common/enums/role.enum';
-import { getConfigOrError } from 'src/utils/config.utils';
+import { getConfigOrError } from 'src/common/utils/config.utils';
 import { JwtPayload } from './types/jwt-payload.type';
 
 @Injectable()

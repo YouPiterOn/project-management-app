@@ -7,6 +7,7 @@ import { UserModule } from "./user/user.module";
 import { APP_FILTER, APP_GUARD, Reflector } from "@nestjs/core";
 import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
 import { AtGuard } from "./auth/guards/at.guard";
+import { ProjectModule } from "./project/project.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AtGuard } from "./auth/guards/at.guard";
     DatabaseModule,
 		AuthModule,
 		UserModule,
+		ProjectModule
   ],
   controllers: [AppController],
   providers: [

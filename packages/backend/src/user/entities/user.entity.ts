@@ -1,5 +1,6 @@
 import { Role } from 'src/common/enums/role.enum';
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Project } from 'src/project/entities/project.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -21,6 +22,9 @@ export class User {
     default: Role.USER,
   })
   role: Role;
+
+  @OneToMany(() => Project, project => project.owner)
+  projects: Project[];
 
   @CreateDateColumn()
   createdAt: Date;
