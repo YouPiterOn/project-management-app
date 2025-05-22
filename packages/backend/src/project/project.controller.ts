@@ -39,7 +39,7 @@ export class ProjectController {
     @Query(new ValidationPipe({ transform: true })) baseQuery: ProjectPaginationQueryDto,
     @Query(new ValidationPipe({ transform: true })) filters: ProjectFiltersDto,
   ) {
-    return await this.projectService.getPaginated({...baseQuery, filters: { owner: { id: filters.ownerId }}}) as ResponsePaginatedProjectsDto;
+    return await this.projectService.getPaginated({...baseQuery, filters}) as ResponsePaginatedProjectsDto;
   }
 
   @Post()

@@ -11,3 +11,9 @@ export class UserNotFoundException extends NotFoundException {
     super(id ? `User not found by id ${id}` : 'User not found');
   }
 }
+
+export class TaskNotFoundException extends NotFoundException {
+  constructor(id?: string) {
+    super(id ? `Task not found by id ${id}` : 'Task not found');
+  }
+}

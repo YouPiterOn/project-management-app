@@ -8,6 +8,7 @@ import { APP_FILTER, APP_GUARD, Reflector } from "@nestjs/core";
 import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
 import { AtGuard } from "./auth/guards/at.guard";
 import { ProjectModule } from "./project/project.module";
+import { TaskModule } from "./task/task.module";
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { ProjectModule } from "./project/project.module";
     DatabaseModule,
 		AuthModule,
 		UserModule,
-		ProjectModule
+		ProjectModule,
+		TaskModule
   ],
   controllers: [AppController],
   providers: [

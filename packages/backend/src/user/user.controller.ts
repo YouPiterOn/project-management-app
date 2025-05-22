@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, ParseIntPipe, ParseUUIDPipe, Patch, Put, Query, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Patch, Put, Query, UseGuards, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';

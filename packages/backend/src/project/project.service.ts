@@ -57,7 +57,6 @@ export class ProjectService {
     return await this.projectRepo.save(project);
   }
 
-
   async put(
     id: string,
     payload: {

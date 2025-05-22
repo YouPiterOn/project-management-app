@@ -1,5 +1,6 @@
+import { Task } from 'src/task/entities/task.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn, RelationId } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Project {
@@ -12,12 +13,15 @@ export class Project {
   @Column({ nullable: true })
   description?: string;
 
-  @ManyToOne(() => User, (user) => user.projects)
+  @ManyToOne(() => User, (user) => user.projects, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'ownerId' })
   owner: User;
 
-  @Column()
-  ownerId: string;
+  @Column({ nullable: true })
+  ownerId?: string;
+
+  @OneToMany(() => Task, (task) => task.project)
+  tasks: Task[];
 
   @CreateDateColumn()
   createdAt: Date;

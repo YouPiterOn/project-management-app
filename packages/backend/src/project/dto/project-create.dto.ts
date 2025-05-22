@@ -9,5 +9,6 @@ export class ProjectCreateDto {
 
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   description: string;
 }

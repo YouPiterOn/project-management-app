@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Patch, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Patch, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { UserData } from "src/common/decorators/user-data.decorator";
 import { ApiBearerAuth, ApiOkResponse } from "@nestjs/swagger";
