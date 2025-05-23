@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      target: backend-prod
+    expose:
+      - 3030
+    env_file:
+      - packages/backend/.env.production
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      target: frontend-prod
+    ports:
+      - '80:80'
+
+volumes:
+  pgdata:
