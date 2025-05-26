@@ -1,15 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Patch, Put } from "@nestjs/common";
-import { UserService } from "./user.service";
-import { UserData } from "src/common/decorators/user-data.decorator";
-import { ApiBearerAuth, ApiOkResponse } from "@nestjs/swagger";
-import { UserPutDto } from "./dto/user-put.dto";
-import { UserPatchDto } from "./dto/user-patch.dto";
-import { ResponseUserDto } from "./dto/response-user.dto";
+import { Body, Controller, Delete, Get, HttpCode, Patch, Put } from '@nestjs/common';
+import { UserService } from './user.service';
+import { UserData } from 'src/common/decorators/user-data.decorator';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { UserPutDto } from './dto/user-put.dto';
+import { UserPatchDto } from './dto/user-patch.dto';
+import { ResponseUserDto } from './dto/response-user.dto';
+import { withoutPassword } from './user.util';
 
 @Controller('me')
 @ApiBearerAuth()
 export class MeController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   @Get()
   @HttpCode(200)
@@ -17,11 +18,7 @@ export class MeController {
   async get(@UserData('sub') userId: string) {
     const user = await this.userService.findById(userId);
 
-    const {
-      password,
-      ...data
-    } = user;
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 
   @Patch()
@@ -30,11 +27,7 @@ export class MeController {
   async patch(@UserData('sub') userId: string, @Body() body: UserPatchDto) {
     const user = await this.userService.patch(userId, body);
 
-    const {
-      password,
-      ...data
-    } = user;
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 
   @Put()
@@ -43,11 +36,7 @@ export class MeController {
   async put(@UserData('sub') userId: string, @Body() body: UserPutDto) {
     const user = await this.userService.put(userId, body);
 
-    const {
-      password,
-      ...data
-    } = user;
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 
   @Delete()
@@ -56,11 +45,6 @@ export class MeController {
   async delete(@UserData('sub') userId: string) {
     const user = await this.userService.remove(userId);
 
-    const {
-      password,
-      ...data
-    } = user;
-
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 }

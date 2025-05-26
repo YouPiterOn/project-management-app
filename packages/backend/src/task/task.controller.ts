@@ -38,10 +38,10 @@ export class TaskController {
     @Query(new ValidationPipe({ transform: true })) baseQuery: TaskPaginationQueryDto,
     @Query(new ValidationPipe({ transform: true })) filters: TaskFiltersDto,
   ) {
-    return await this.taskService.getPaginated({
+    return (await this.taskService.getPaginated({
       ...baseQuery,
       filters,
-    }) as ResponsePaginatedTasksDto;
+    })) as ResponsePaginatedTasksDto;
   }
 
   @Post()
@@ -51,14 +51,20 @@ export class TaskController {
   @ApiCreatedResponse({ type: ResponseTaskDto })
   async create(@Body() body: TaskCreateDto) {
     const { title, description, projectId, assigneeId, status } = body;
-    return await this.taskService.create(title, description, projectId, assigneeId, status) as ResponseTaskDto;
+    return (await this.taskService.create(
+      title,
+      description,
+      projectId,
+      assigneeId,
+      status,
+    )) as ResponseTaskDto;
   }
 
   @Get(':id')
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })
   async getById(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.taskService.findById(id) as ResponseTaskDto;
+    return (await this.taskService.findById(id)) as ResponseTaskDto;
   }
 
   @Patch(':id')
@@ -67,7 +73,7 @@ export class TaskController {
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })
   async patch(@Param('id', ParseUUIDPipe) id: string, @Body() body: TaskPatchDto) {
-    return await this.taskService.patch(id, body) as ResponseTaskDto;
+    return (await this.taskService.patch(id, body)) as ResponseTaskDto;
   }
 
   @Put(':id')
@@ -76,7 +82,7 @@ export class TaskController {
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })
   async put(@Param('id', ParseUUIDPipe) id: string, @Body() body: TaskPutDto) {
-    return await this.taskService.put(id, body) as ResponseTaskDto;
+    return (await this.taskService.put(id, body)) as ResponseTaskDto;
   }
 
   @Delete(':id')
@@ -85,6 +91,6 @@ export class TaskController {
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.taskService.remove(id) as ResponseTaskDto;
+    return (await this.taskService.remove(id)) as ResponseTaskDto;
   }
 }

@@ -12,7 +12,7 @@
     "baseUrl": "./",
     "incremental": true,
     "strict": true,
-		"strictPropertyInitialization": false,
+    "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true

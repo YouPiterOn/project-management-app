@@ -30,7 +30,7 @@ import { ResponsePaginatedProjectsDto } from './dto/response-paginated-projects.
 @Controller('projects')
 @ApiBearerAuth()
 export class ProjectController {
-  constructor(private readonly projectService: ProjectService) { }
+  constructor(private readonly projectService: ProjectService) {}
 
   @Get()
   @HttpCode(200)
@@ -39,7 +39,10 @@ export class ProjectController {
     @Query(new ValidationPipe({ transform: true })) baseQuery: ProjectPaginationQueryDto,
     @Query(new ValidationPipe({ transform: true })) filters: ProjectFiltersDto,
   ) {
-    return await this.projectService.getPaginated({...baseQuery, filters}) as ResponsePaginatedProjectsDto;
+    return (await this.projectService.getPaginated({
+      ...baseQuery,
+      filters,
+    })) as ResponsePaginatedProjectsDto;
   }
 
   @Post()
@@ -47,14 +50,14 @@ export class ProjectController {
   @ApiCreatedResponse({ type: ResponseProjectDto })
   async create(@UserData('sub') userId: string, @Body() body: ProjectCreateDto) {
     const { title, description } = body;
-    return await this.projectService.create(title, description, userId) as ResponseProjectDto;
+    return (await this.projectService.create(title, description, userId)) as ResponseProjectDto;
   }
 
   @Get(':id')
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
   async getById(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.projectService.findById(id) as ResponseProjectDto;
+    return (await this.projectService.findById(id)) as ResponseProjectDto;
   }
 
   @Patch(':id')
@@ -62,11 +65,8 @@ export class ProjectController {
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
-  async patch(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: ProjectPatchDto,
-  ) {
-    return await this.projectService.patch(id, body) as ResponseProjectDto;
+  async patch(@Param('id', ParseUUIDPipe) id: string, @Body() body: ProjectPatchDto) {
+    return (await this.projectService.patch(id, body)) as ResponseProjectDto;
   }
 
   @Put(':id')
@@ -74,11 +74,8 @@ export class ProjectController {
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
-  async put(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: ProjectPutDto
-  ) {
-    return await this.projectService.put(id, body) as ResponseProjectDto;
+  async put(@Param('id', ParseUUIDPipe) id: string, @Body() body: ProjectPutDto) {
+    return (await this.projectService.put(id, body)) as ResponseProjectDto;
   }
 
   @Delete(':id')
@@ -87,6 +84,6 @@ export class ProjectController {
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
   async remove(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.projectService.remove(id) as ResponseProjectDto;
+    return (await this.projectService.remove(id)) as ResponseProjectDto;
   }
 }

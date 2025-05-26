@@ -7,37 +7,37 @@ import { JwtPayload } from './types/jwt-payload.type';
 
 @Injectable()
 export class JwtService {
-	constructor(
-		private nestJwtService: NestJwtService,
-		configService: ConfigService,
-	) {
-		this.secret = getConfigOrError(configService, 'JWT_SECRET');
-		this.expiresIn = getConfigOrError(configService, 'JWT_EXPIRES_IN');
-	}
+  constructor(
+    private nestJwtService: NestJwtService,
+    configService: ConfigService,
+  ) {
+    this.secret = getConfigOrError(configService, 'JWT_SECRET');
+    this.expiresIn = getConfigOrError(configService, 'JWT_EXPIRES_IN');
+  }
 
-	private secret: string;
-	private expiresIn: string;
+  private secret: string;
+  private expiresIn: string;
 
-	async sign(userId: string, email: string, role: Role) {
-		const payload: JwtPayload = { sub: userId, email, role };
+  async sign(userId: string, email: string, role: Role) {
+    const payload: JwtPayload = { sub: userId, email, role };
 
-		const token = await this.nestJwtService.signAsync(payload, {
-			secret: this.secret,
-			expiresIn: this.expiresIn,
-		});
+    const token = await this.nestJwtService.signAsync(payload, {
+      secret: this.secret,
+      expiresIn: this.expiresIn,
+    });
 
-		return token;
-	}
+    return token;
+  }
 
-	async verify(token: string) {
-		const payload = await this.nestJwtService.verifyAsync(token, {
-			secret: this.secret,
-		});
+  async verify(token: string) {
+    const payload = await this.nestJwtService.verifyAsync(token, {
+      secret: this.secret,
+    });
 
-		return {
-			userId: payload.sub,
-			email: payload.email,
-			role: payload.role,
-		};
-	}
+    return {
+      userId: payload.sub,
+      email: payload.email,
+      role: payload.role,
+    };
+  }
 }

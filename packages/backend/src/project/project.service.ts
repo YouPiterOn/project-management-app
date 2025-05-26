@@ -12,8 +12,8 @@ export class ProjectService {
   constructor(
     @InjectRepository(Project)
     private projectRepo: Repository<Project>,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+  ) {}
 
   async create(title: string, description: string, ownerId: string) {
     const project = this.projectRepo.create({
@@ -27,7 +27,7 @@ export class ProjectService {
 
   async findById(id: string) {
     const project = await this.projectRepo.findOne({
-      where: { id }
+      where: { id },
     });
 
     if (project === null) throw new ProjectNotFoundException(id);
@@ -44,7 +44,7 @@ export class ProjectService {
     },
   ) {
     const project = await this.projectRepo.findOne({
-      where: { id }
+      where: { id },
     });
     if (project === null) throw new ProjectNotFoundException(id);
 
@@ -66,7 +66,7 @@ export class ProjectService {
     },
   ) {
     const project = await this.projectRepo.findOne({
-      where: { id }
+      where: { id },
     });
     if (project === null) throw new ProjectNotFoundException(id);
 
@@ -86,13 +86,7 @@ export class ProjectService {
   }
 
   async getPaginated(options: PaginationQueryOptions<Project> = {}) {
-    const {
-      page = 1,
-      pageSize = 10,
-      sortBy = 'id',
-      sortOrder = 'ASC',
-      filters = {},
-    } = options;
+    const { page = 1, pageSize = 10, sortBy = 'id', sortOrder = 'ASC', filters = {} } = options;
 
     const skip = (page - 1) * pageSize;
 

@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
-  ) { }
+  ) {}
 
   async create(email: string, password: string, name: string) {
     const passwordHash = await this.hashPassword(password);
@@ -20,7 +20,7 @@ export class UserService {
     const user = this.userRepo.create({
       email,
       name,
-      password: passwordHash
+      password: passwordHash,
     });
 
     return await this.userRepo.save(user);
@@ -37,7 +37,7 @@ export class UserService {
       where: { id },
     });
 
-    if(user === null) throw new UserNotFoundException(id);
+    if (user === null) throw new UserNotFoundException(id);
 
     return user;
   }
@@ -75,7 +75,7 @@ export class UserService {
 
     user.email = payload.email;
     user.name = payload.name;
-    user.password = await this.hashPassword(payload.password)
+    user.password = await this.hashPassword(payload.password);
 
     return await this.userRepo.save(user);
   }
@@ -87,13 +87,7 @@ export class UserService {
   }
 
   async getPaginated(options: PaginationQueryOptions<User> = {}) {
-    const {
-      page = 1,
-      pageSize = 10,
-      sortBy = 'id',
-      sortOrder = 'ASC',
-      filters = {},
-    } = options;
+    const { page = 1, pageSize = 10, sortBy = 'id', sortOrder = 'ASC', filters = {} } = options;
 
     const skip = (page - 1) * pageSize;
 

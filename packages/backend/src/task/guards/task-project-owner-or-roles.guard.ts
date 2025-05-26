@@ -1,8 +1,8 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from "@nestjs/common";
-import { TaskService } from "../task.service";
-import { ProjectService } from "src/project/project.service";
-import { Reflector } from "@nestjs/core";
-import { ROLES_KEY } from "src/common/decorators/roles.decorator";
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import { TaskService } from '../task.service';
+import { ProjectService } from 'src/project/project.service';
+import { Reflector } from '@nestjs/core';
+import { ROLES_KEY } from 'src/common/decorators/roles.decorator';
 
 @Injectable()
 export class TaskProjectOwnerOrRolesGuard implements CanActivate {
@@ -13,10 +13,10 @@ export class TaskProjectOwnerOrRolesGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<string[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()],
-    );
+    const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
 
     const request = context.switchToHttp().getRequest();
     const { user, params, body } = request;
@@ -33,8 +33,7 @@ export class TaskProjectOwnerOrRolesGuard implements CanActivate {
 
     if (body.projectId) {
       projectId = body.projectId;
-    }
-    else if (params.id) {
+    } else if (params.id) {
       const task = await this.taskService.findById(params.id);
       projectId = task.projectId;
     }

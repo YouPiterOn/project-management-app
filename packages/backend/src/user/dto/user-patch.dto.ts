@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsOptional, IsString } from "class-validator";
-import { IsPassword } from "src/common/decorators/is-password.decorator";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsPassword } from 'src/common/decorators/is-password.decorator';
 
 export class UserPatchDto {
   @ApiPropertyOptional()

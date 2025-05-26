@@ -1,53 +1,53 @@
-const {
-    defineConfig,
-    globalIgnores,
-} = require("eslint/config");
+import { defineConfig, globalIgnores } from "eslint/config";
 
-const tsParser = require("@typescript-eslint/parser");
-const typescriptEslint = require("@typescript-eslint/eslint-plugin");
-const nestjs = require("eslint-plugin-nestjs");
-const globals = require("globals");
-const js = require("@eslint/js");
+import tsParser from "@typescript-eslint/parser";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import nestjs from "eslint-plugin-nestjs";
+import globals from "globals";
+import js from "@eslint/js";
 
-const {
-    FlatCompat,
-} = require("@eslint/eslintrc");
+import { FlatCompat } from "@eslint/eslintrc";
 
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
-module.exports = defineConfig([{
+export default defineConfig([
+  {
     languageOptions: {
-        parser: tsParser,
+      parser: tsParser,
 
-        globals: {
-            ...globals.node,
-            ...globals.jest,
-        },
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
 
-        sourceType: "module",
+      sourceType: 'module',
 
-        parserOptions: {
-            project: "./tsconfig.json",
-        },
+      parserOptions: {
+        project: './tsconfig.json',
+      },
     },
 
     plugins: {
-        "@typescript-eslint": typescriptEslint,
-        "nestjs": nestjs
+      '@typescript-eslint': typescriptEslint,
+      nestjs: nestjs,
     },
 
-    extends: compat.extends(
-        "plugin:@typescript-eslint/recommended",
-        "plugin:nestjs/recommended",
-    ),
+    extends: compat.extends('plugin:@typescript-eslint/recommended', 'plugin:nestjs/recommended'),
 
     rules: {
-        "@typescript-eslint/no-unused-vars": ["warn", {
-            argsIgnorePattern: "^_",
-        }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      'nestjs/use-validation-pipe': 'off',
     },
-}, globalIgnores(["**/dist/", "**/node_modules/"])]);
+  },
+  globalIgnores(['**/dist/', '**/node_modules/']),
+]);

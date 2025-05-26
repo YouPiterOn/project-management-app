@@ -1,9 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  ForbiddenException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from 'src/common/decorators/roles.decorator';
 import { ProjectService } from '../project.service';
@@ -16,10 +11,10 @@ export class ProjectOwnerOrRolesGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<string[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()],
-    );
+    const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
 
     const request = context.switchToHttp().getRequest();
     const { user, params } = request;
@@ -31,7 +26,7 @@ export class ProjectOwnerOrRolesGuard implements CanActivate {
     if (requiredRoles && requiredRoles.includes(user.role)) {
       return true;
     }
-    
+
     const projectId = params.id;
     if (!projectId) {
       throw new ForbiddenException('Missing project ID for ownership check');

@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseUUIDPipe, Patch, Put, Query, UseGuards, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Put,
+  Query,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
@@ -9,19 +22,20 @@ import { UserPatchDto } from './dto/user-patch.dto';
 import { UserPutDto } from './dto/user-put.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { ResponsePaginatedUsersDto } from './dto/response-paginated-users.dto';
+import { withoutPassword } from './user.util';
 
 @Controller('users')
 @ApiBearerAuth()
 export class UserController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   @Get()
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedUsersDto })
   async getPaginated(
-    @Query(new ValidationPipe({ transform: true })) baseQuery: UserPaginationQueryDto
+    @Query(new ValidationPipe({ transform: true })) baseQuery: UserPaginationQueryDto,
   ) {
-    return await this.userService.getPaginated(baseQuery) as ResponsePaginatedUsersDto;
+    return (await this.userService.getPaginated(baseQuery)) as ResponsePaginatedUsersDto;
   }
 
   @Get(':id')
@@ -30,12 +44,7 @@ export class UserController {
   async getById(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.userService.findById(id);
 
-    const {
-      password,
-      ...data
-    } = user;
-
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 
   @Patch(':id')
@@ -43,18 +52,10 @@ export class UserController {
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseUserDto })
-  async patch(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: UserPatchDto
-  ) {
+  async patch(@Param('id', ParseUUIDPipe) id: string, @Body() body: UserPatchDto) {
     const user = await this.userService.patch(id, body);
 
-    const {
-      password,
-      ...data
-    } = user;
-
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 
   @Put(':id')
@@ -62,18 +63,10 @@ export class UserController {
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseUserDto })
-  async put(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: UserPutDto
-  ) {
+  async put(@Param('id', ParseUUIDPipe) id: string, @Body() body: UserPutDto) {
     const user = await this.userService.put(id, body);
 
-    const {
-      password,
-      ...data
-    } = user;
-
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 
   @Delete(':id')
@@ -84,11 +77,6 @@ export class UserController {
   async deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.userService.remove(id);
 
-    const {
-      password,
-      ...data
-    } = user;
-    
-    return data as ResponseUserDto;
+    return withoutPassword(user) as ResponseUserDto;
   }
 }

@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Role } from "src/common/enums/role.enum";
+import { ApiProperty } from '@nestjs/swagger';
+import { Role } from 'src/common/enums/role.enum';
 
 export class ResponseUserDto {
   @ApiProperty()
@@ -19,5 +19,4 @@ export class ResponseUserDto {
 
   @ApiProperty()
   updatedAt: Date;
-
 }

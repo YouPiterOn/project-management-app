@@ -2,7 +2,14 @@
   "name": "project-management-app",
   "packageManager": "yarn@4.5.2",
   "private": true,
+  "scripts": {
+    "lint": "yarn workspaces foreach --all --parallel run lint",
+    "prettier": "prettier --write \"**/*.{js,ts,tsx}\""
+  },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
 }

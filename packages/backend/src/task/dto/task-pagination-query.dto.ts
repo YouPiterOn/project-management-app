@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsIn, IsOptional } from "class-validator";
-import { BasePaginationQueryDto } from "src/common/dto/base-pagination-query.dto";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsIn, IsOptional } from 'class-validator';
+import { BasePaginationQueryDto } from 'src/common/dto/base-pagination-query.dto';
 
 export class TaskPaginationQueryDto extends BasePaginationQueryDto {
   @ApiPropertyOptional()

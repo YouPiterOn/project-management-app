@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { ResponsePaginatedDto } from "src/common/dto/response-paginated.dto";
-import { TaskStatus } from "../enums/task-status.enum";
+import { ApiProperty } from '@nestjs/swagger';
+import { ResponsePaginatedDto } from 'src/common/dto/response-paginated.dto';
+import { TaskStatus } from '../enums/task-status.enum';
 
 class PaginatedTask {
   @ApiProperty()
@@ -19,5 +19,5 @@ class PaginatedTask {
 
 export class ResponsePaginatedTasksDto extends ResponsePaginatedDto {
   @ApiProperty({ type: PaginatedTask, isArray: true })
-  items: PaginatedTask[]
+  items: PaginatedTask[];
 }

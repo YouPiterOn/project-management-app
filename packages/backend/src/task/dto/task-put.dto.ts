@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { TaskStatus } from "../enums/task-status.enum";
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { TaskStatus } from '../enums/task-status.enum';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class TaskPutDto {
   @ApiProperty()
@@ -16,7 +16,7 @@ export class TaskPutDto {
   @ApiProperty()
   @IsOptional()
   @IsUUID()
-  assigneeId?: string
+  assigneeId?: string;
 
   @ApiProperty()
   @IsNotEmpty()

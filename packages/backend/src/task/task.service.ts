@@ -95,13 +95,7 @@ export class TaskService {
   }
 
   async getPaginated(options: PaginationQueryOptions<Task> = {}) {
-    const {
-      page = 1,
-      pageSize = 10,
-      sortBy = 'id',
-      sortOrder = 'ASC',
-      filters = {},
-    } = options;
+    const { page = 1, pageSize = 10, sortBy = 'id', sortOrder = 'ASC', filters = {} } = options;
 
     const skip = (page - 1) * pageSize;
 
