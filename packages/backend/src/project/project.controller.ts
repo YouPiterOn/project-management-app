@@ -8,7 +8,6 @@ import {
   Query,
   Body,
   ParseUUIDPipe,
-  ValidationPipe,
   Put,
   UseGuards,
   HttpCode,
@@ -36,8 +35,8 @@ export class ProjectController {
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedProjectsDto })
   async getPaginated(
-    @Query(new ValidationPipe({ transform: true })) baseQuery: ProjectPaginationQueryDto,
-    @Query(new ValidationPipe({ transform: true })) filters: ProjectFiltersDto,
+    @Query() baseQuery: ProjectPaginationQueryDto,
+    @Query() filters: ProjectFiltersDto,
   ) {
     return (await this.projectService.getPaginated({
       ...baseQuery,

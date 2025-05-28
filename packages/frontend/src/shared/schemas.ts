@@ -7,3 +7,5 @@ export const errorResponseSchema = z.object({
 });
 
 export type ErrorResponse = z.infer<typeof errorResponseSchema>;
+
+export const emptySchema = z.any().transform(() => undefined);

@@ -7,12 +7,12 @@ import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ResponseAuthDto } from './dto/response-auth.dto';
 import { Response } from 'express';
 
-@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
+  @Public()
   @HttpCode(201)
   @ApiCreatedResponse({ type: ResponseAuthDto })
   async signUp(@Body() payload: SignUpDto, @Res({ passthrough: true }) res: Response) {
@@ -29,6 +29,7 @@ export class AuthController {
   }
 
   @Post('signin')
+  @Public()
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseAuthDto })
   async signIn(@Body() payload: SignInDto, @Res({ passthrough: true }) res: Response) {
@@ -42,5 +43,20 @@ export class AuthController {
     });
 
     return user as ResponseAuthDto;
+  }
+
+  @Post('signout')
+  @Public()
+  @HttpCode(200)
+  @ApiOkResponse()
+  async signOut(@Res({ passthrough: true }) res: Response) {
+    res.cookie('access_token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      expires: new Date(0), // expire immediately
+    });
+
+    return { message: 'Signed out successfully' };
   }
 }

@@ -1,20 +1,25 @@
-import { defineConfig, globalIgnores } from "eslint/config";
+const {
+  defineConfig,
+  globalIgnores,
+} = require("eslint/config");
 
-import tsParser from "@typescript-eslint/parser";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import nestjs from "eslint-plugin-nestjs";
-import globals from "globals";
-import js from "@eslint/js";
+const tsParser = require("@typescript-eslint/parser");
+const typescriptEslint = require("@typescript-eslint/eslint-plugin");
+const nestjs = require("eslint-plugin-nestjs");
+const globals = require("globals");
+const js = require("@eslint/js");
 
-import { FlatCompat } from "@eslint/eslintrc";
+const {
+  FlatCompat,
+} = require("@eslint/eslintrc");
 
 const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
+  baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 });
 
-export default defineConfig([
+module.exports = defineConfig([
   {
     languageOptions: {
       parser: tsParser,

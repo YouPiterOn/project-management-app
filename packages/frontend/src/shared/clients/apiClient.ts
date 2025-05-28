@@ -1,7 +1,23 @@
 import type { ZodSchema } from 'zod';
-import { errorResponseSchema } from '../schemas';
+import { errorResponseSchema, type ErrorResponse } from '../schemas';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
+
+export class ApiError extends Error implements ErrorResponse {
+  constructor({ statusCode, message, timestamp }: {
+    statusCode: number,
+    message?: string,
+    timestamp?: string
+  }) {
+    super(message);
+    this.statusCode = statusCode;
+    this.timestamp = timestamp || Date.now().toString();
+    this.name = 'ApiError';
+  }
+
+  statusCode: number;
+  timestamp: string;
+}
 
 export async function apiFetch<T>(
   url: string,
@@ -17,26 +33,14 @@ export async function apiFetch<T>(
     ...options,
   });
 
-  let json: unknown;
-
-  try {
-    json = await res.json();
-  } catch {
-    if (!res.ok) {
-      throw new Error(`Request failed with status ${res.status}`);
-    } else {
-      throw new Error('Unknown type of response');
-    }
-  }
+  const json = await res.json().catch(() => {
+    throw new ApiError({statusCode: res.status, message: 'Unknown type of response'});
+  });
 
   if (!res.ok) {
-    try {
-      const error = errorResponseSchema.parse(json);
-      console.error(`${error.timestamp} Error ${error.statusCode}: ${error.message}`);
-      throw new Error(error.message);
-    } catch {
-      throw new Error('An unknown error occurred');
-    }
+    const error = errorResponseSchema.parse(json);
+    console.error(`${error.timestamp} Error ${error.statusCode}: ${error.message}`);
+    throw new ApiError(error);
   }
 
   return schema.parse(json);

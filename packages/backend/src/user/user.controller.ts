@@ -10,7 +10,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -33,7 +32,7 @@ export class UserController {
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedUsersDto })
   async getPaginated(
-    @Query(new ValidationPipe({ transform: true })) baseQuery: UserPaginationQueryDto,
+    @Query() baseQuery: UserPaginationQueryDto,
   ) {
     return (await this.userService.getPaginated(baseQuery)) as ResponsePaginatedUsersDto;
   }

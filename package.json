@@ -3,7 +3,9 @@
   "packageManager": "yarn@4.5.2",
   "private": true,
   "scripts": {
-    "lint": "yarn workspaces foreach --all --parallel run lint",
+    "lint": "yarn workspaces foreach --all --parallel --verbose --interlaced run lint",
+    "dev": "yarn workspaces foreach --all --parallel --verbose --interlaced run dev",
+    "build": "yarn workspaces foreach --all --parallel --verbose --interlaced run build",
     "prettier": "prettier --write \"**/*.{js,ts,tsx}\""
   },
   "workspaces": [

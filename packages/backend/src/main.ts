@@ -12,11 +12,20 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      forbidNonWhitelisted: true,
+      whitelist: true,
+      transform: true,
     }),
   );
   app.setGlobalPrefix('api');
-  app.enableCors();
+
+  if (process.env.NODE_ENV === 'development') {
+    app.enableCors({
+      origin: 'http://localhost:5173',
+      credentials: true,
+    });
+  } else {
+    app.enableCors({ credentials: true });
+  }
 
   const config = new DocumentBuilder()
     .setTitle('Project Management App API')

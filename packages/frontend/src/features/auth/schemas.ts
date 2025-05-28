@@ -1,15 +1,12 @@
 import z from 'zod';
 
-export const authResponseSchema = z.object({
-  accessToken: z.string(),
-  user: z.object({
-    id: z.string(),
-    email: z.string(),
-    name: z.string(),
-  }),
-});
+export const authUserSchema = z.object({
+  id: z.string(),
+  email: z.string(),
+  name: z.string(),
+}).strip();
 
-export type AuthResponse = z.infer<typeof authResponseSchema>;
+export type AuthUser = z.infer<typeof authUserSchema>;
 
 export const signInSchema = z.object({
   email: z.string().email(),

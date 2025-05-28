@@ -11,7 +11,6 @@ import {
   Put,
   Query,
   UseGuards,
-  ValidationPipe,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -35,8 +34,8 @@ export class TaskController {
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedTasksDto })
   async getPaginated(
-    @Query(new ValidationPipe({ transform: true })) baseQuery: TaskPaginationQueryDto,
-    @Query(new ValidationPipe({ transform: true })) filters: TaskFiltersDto,
+    @Query() baseQuery: TaskPaginationQueryDto,
+    @Query() filters: TaskFiltersDto,
   ) {
     return (await this.taskService.getPaginated({
       ...baseQuery,
