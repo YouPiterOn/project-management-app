@@ -49,7 +49,7 @@ export function HomePage() {
             </p>
           </div>
           <div className='flex flex-col gap-2'>
-            <LinkButton to="/me/dashboard">
+            <LinkButton to="/dashboard">
               <div className="flex items-center gap-2">
                 <ListTodo className="h-5 w-5" />
                 My Dashboard

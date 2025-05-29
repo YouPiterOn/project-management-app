@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Project } from './entities/project.entity';
 import { PaginationQueryOptions } from 'src/common/types/pagination-query-options.type';
 import { ProjectNotFoundException } from 'src/common/exceptions/not-found.exceptions';
@@ -13,7 +13,7 @@ export class ProjectService {
     @InjectRepository(Project)
     private projectRepo: Repository<Project>,
     private userService: UserService,
-  ) {}
+  ) { }
 
   async create(title: string, description: string, ownerId: string) {
     const project = this.projectRepo.create({
@@ -91,8 +91,24 @@ export class ProjectService {
     const skip = (page - 1) * pageSize;
 
     const [projects, totalItems] = await this.projectRepo.findAndCount({
-      select: ['id', 'title', 'description', 'ownerId'],
-      where: filters,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        createdAt: true,
+        updatedAt: true,
+        owner: {
+          id: true,
+          name: true,
+        },
+      },
+      relations: {
+        owner: true,
+      },
+      where: {
+        ...filters,
+        title: filters.title ? ILike(`%${filters.title}%`) : undefined,
+      },
       skip,
       take: pageSize,
       order: { [sortBy]: sortOrder },

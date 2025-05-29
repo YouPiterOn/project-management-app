@@ -5,9 +5,8 @@ import { useForm } from 'react-hook-form';
 import { signUpSchema, type SignUpValues } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { authClient } from '../clients/authClient';
 import { useAuth } from '../contexts/AuthContext';
-
+import { useNavigate } from 'react-router';
 
 export function SignUpPage() {
   const {
@@ -16,11 +15,12 @@ export function SignUpPage() {
     formState: { errors },
   } = useForm<SignUpValues>({ resolver: zodResolver(signUpSchema) });
 
-  const { signIn } = useAuth()
+  const { signUp } = useAuth()
+  const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
-    mutationFn: authClient.signUp,
-    onSuccess: signIn,
+    mutationFn: signUp,
+    onSuccess: () => navigate('/'),
   });
 
   return (

@@ -1,30 +1,33 @@
+import { User } from "lucide-react";
 import { Link } from "react-router";
 
 interface ProjectCardProps {
   id: string;
   title: string;
   description: string;
+  owner: {
+    id: string;
+    name: string;
+  }
 }
 
-export function ProjectCard({ id, title, description }: ProjectCardProps) {
-  const shortDescription =
-    description.length > 50 ? description.slice(0, 47) + "..." : description;
-
+export function ProjectCard({ id, title, description, owner }: ProjectCardProps) {
   return (
     <Link
       to={`/projects/${id}`}
-      className="bg-background text-foreground border-2 border-foreground rounded-xl shadow-sm p-6 flex flex-col justify-between transition hover:shadow-md"
+      className="group bg-background text-foreground border-2 border-foreground rounded-xl shadow-sm px-6 py-3 flex flex-col justify-between transition hover:shadow-md"
     >
       <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-1 group-hover:underline underline-offset-4 transition">
+        <h2 className="text-lg font-semibold mb-1 group-hover:underline transition underline-offset-4">
           {title}
         </h2>
-        <p className="text-sm text-muted-foreground">
-          {shortDescription}
+        <p className="max-w-full text-sm text-muted-foreground overflow-hidden text-ellipsis">
+          {description}
         </p>
       </div>
-      <div className="mt-auto pt-4 text-sm font-medium text-foreground underline-offset-4 hover:underline">
-        View Project →
+      <div className="flex flex-row items-center gap-1">
+        <User className="h-4 w-4" />
+        <h3 className="text-md">{owner.name}</h3>
       </div>
     </Link>
   );

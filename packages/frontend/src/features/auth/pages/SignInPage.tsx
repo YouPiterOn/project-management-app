@@ -6,7 +6,7 @@ import { Button, LinkButton } from '../../../shared/components/Button';
 import { ArrowLeft } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '../contexts/AuthContext';
-import { authClient } from '../clients/authClient';
+import { useNavigate } from 'react-router';
 
 export function SignInPage() {
   const {
@@ -16,10 +16,11 @@ export function SignInPage() {
   } = useForm<SignInValues>({ resolver: zodResolver(signInSchema) });
 
   const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
-    mutationFn: authClient.signIn,
-    onSuccess: signIn,
+    mutationFn: signIn,
+    onSuccess: () => navigate('/'),
   });
 
   return (

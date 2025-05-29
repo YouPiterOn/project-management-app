@@ -1,15 +1,9 @@
 import { Link } from "react-router";
 import { Button, LinkButton } from "./Button";
 import { useAuth } from "../../features/auth/contexts/AuthContext";
-import { useCallback } from "react";
-import { authClient } from "../../features/auth/clients/authClient";
 
 export function Header() {
   const { user, signOut } = useAuth();
-
-  const onSignOut = useCallback(() => {
-    authClient.signOut().then(signOut);
-  }, [signOut]);
 
   return (
     <header className="w-full py-4 border-b">
@@ -20,17 +14,17 @@ export function Header() {
 
         {user ? (
           <div className="flex gap-4 items-center">
-            <Link to="/dashboard" className="text-sm hover:underline">
+            <LinkButton to="/dashboard" size="sm" variant="link">
               Dashboard
-            </Link>
-            <Link to="/projects" className="text-sm hover:underline">
-              My Projects
-            </Link>
-            <Link to="/profile" className="text-sm hover:underline">
+            </LinkButton>
+            <LinkButton to="/projects" size="sm" variant="link">
+              Projects
+            </LinkButton>
+            <LinkButton to="/profile" size="sm" variant="link">
               Profile
-            </Link>
+            </LinkButton>
             <Button
-              onClick={onSignOut}
+              onClick={signOut}
               size="sm"
             >
               Sign Out
