@@ -1,5 +1,5 @@
-import { User } from "lucide-react";
-import { Link } from "react-router";
+import { User } from 'lucide-react';
+import { Link } from 'react-router';
 
 interface ProjectCardProps {
   id: string;
@@ -8,7 +8,7 @@ interface ProjectCardProps {
   owner: {
     id: string;
     name: string;
-  }
+  };
 }
 
 export function ProjectCard({ id, title, description, owner }: ProjectCardProps) {

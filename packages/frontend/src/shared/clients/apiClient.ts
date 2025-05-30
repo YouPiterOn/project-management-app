@@ -4,10 +4,14 @@ import { errorResponseSchema, type ErrorResponse } from '../schemas';
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 export class ApiError extends Error implements ErrorResponse {
-  constructor({ statusCode, message, timestamp }: {
-    statusCode: number,
-    message?: string,
-    timestamp?: string
+  constructor({
+    statusCode,
+    message,
+    timestamp,
+  }: {
+    statusCode: number;
+    message?: string;
+    timestamp?: string;
   }) {
     super(message);
     this.statusCode = statusCode;
@@ -34,7 +38,7 @@ export async function apiFetch<T>(
   });
 
   const json = await res.json().catch(() => {
-    throw new ApiError({statusCode: res.status, message: 'Unknown type of response'});
+    throw new ApiError({ statusCode: res.status, message: 'Unknown type of response' });
   });
 
   if (!res.ok) {

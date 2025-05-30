@@ -5,6 +5,6 @@ export function toURLSearchParams(data: Record<string, unknown>): URLSearchParam
     }
     return acc;
   }, []);
-  
+
   return new URLSearchParams(entries);
 }

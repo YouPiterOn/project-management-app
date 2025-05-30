@@ -1,6 +1,12 @@
-import { apiFetch } from "../../../shared/clients/apiClient";
-import { toURLSearchParams } from "../../../shared/utils";
-import { paginatedProjectsSchema, projectSchema, type CreateProjectValues, type PaginatedProjects, type ProjectsQuery as ProjectsQuery } from "../schemas";
+import { apiFetch } from '../../../shared/clients/apiClient';
+import { toURLSearchParams } from '../../../shared/utils';
+import {
+  paginatedProjectsSchema,
+  projectSchema,
+  type CreateProjectValues,
+  type PaginatedProjects,
+  type ProjectsQuery as ProjectsQuery,
+} from '../schemas';
 
 async function getPaginated(query: ProjectsQuery): Promise<PaginatedProjects> {
   const params = toURLSearchParams(query).toString();
@@ -17,5 +23,5 @@ async function create(data: CreateProjectValues) {
 
 export const projectsClient = {
   getPaginated,
-  create
-}
+  create,
+};

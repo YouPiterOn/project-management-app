@@ -1,14 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import { ProjectList } from "../components/ProjectList";
-import { Button } from "../../../shared/components/Button";
-import { projectsClient } from "../clients/projectsClient";
-import { CreateProjectModal } from "../components/CreateProjectModal";
-import { useProjectsQuery } from "../hooks/useProjectsQuery";
-import { useSearchParams } from "react-router";
-import { useCallback } from "react";
-import { Select } from "../../../shared/components/Select";
-import { ProjectSearchBar } from "../components/ProjectSearchBar";
-
+import { useQuery } from '@tanstack/react-query';
+import { ProjectList } from '../components/ProjectList';
+import { Button } from '../../../shared/components/Button';
+import { projectsClient } from '../clients/projectsClient';
+import { CreateProjectModal } from '../components/CreateProjectModal';
+import { useProjectsQuery } from '../hooks/useProjectsQuery';
+import { useSearchParams } from 'react-router';
+import { useCallback } from 'react';
+import { Select } from '../../../shared/components/Select';
+import { ProjectSearchBar } from '../components/ProjectSearchBar';
 
 export function ProjectListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,13 +15,14 @@ export function ProjectListPage() {
   const query = useProjectsQuery(searchParams);
   const { page, pageSize } = query;
 
-
-  const goToPage = useCallback((newPage: number) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('page', String(newPage));
-    setSearchParams(newParams);
-  }, [searchParams, setSearchParams]);
-
+  const goToPage = useCallback(
+    (newPage: number) => {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('page', String(newPage));
+      setSearchParams(newParams);
+    },
+    [searchParams, setSearchParams],
+  );
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['projects', query],
@@ -37,16 +37,13 @@ export function ProjectListPage() {
       </div>
       <div className="flex flex-col items-center gap-6 mb-8 md:flex-row">
         <div className="flex-1 w-full md:w-auto">
-          <ProjectSearchBar
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-          />
+          <ProjectSearchBar searchParams={searchParams} setSearchParams={setSearchParams} />
         </div>
 
         <div className="flex flex-row gap-6 flex-1 w-full md:w-auto">
           <Select
             value={searchParams.get('sortBy') || 'createdAt'}
-            onChange={(e) => {
+            onChange={e => {
               const newParams = new URLSearchParams(searchParams);
               newParams.set('sortBy', e.target.value);
               setSearchParams(newParams);
@@ -59,7 +56,7 @@ export function ProjectListPage() {
 
           <Select
             value={searchParams.get('sortOrder') || 'ASC'}
-            onChange={(e) => {
+            onChange={e => {
               const newParams = new URLSearchParams(searchParams);
               newParams.set('sortOrder', e.target.value);
               setSearchParams(newParams);
@@ -70,12 +67,7 @@ export function ProjectListPage() {
           </Select>
         </div>
       </div>
-      <ProjectList
-        data={data}
-        isLoading={isLoading}
-        isError={isError}
-        pageSize={pageSize}
-      />
+      <ProjectList data={data} isLoading={isLoading} isError={isError} pageSize={pageSize} />
       <div className="flex justify-center items-center gap-4 mt-8">
         <Button
           onClick={() => goToPage(Math.max(page - 1, 1))}

@@ -1,6 +1,6 @@
-import { Navigate } from "react-router";
-import { useAuth } from "../contexts/AuthContext";
-import { LoadingPage } from "../../../shared/pages/LoadingPage";
+import { Navigate } from 'react-router';
+import { useAuth } from '../contexts/AuthContext';
+import { LoadingPage } from '../../../shared/pages/LoadingPage';
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isVerifying } = useAuth();

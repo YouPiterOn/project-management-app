@@ -15,7 +15,7 @@ export function SignUpPage() {
     formState: { errors },
   } = useForm<SignUpValues>({ resolver: zodResolver(signUpSchema) });
 
-  const { signUp } = useAuth()
+  const { signUp } = useAuth();
   const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({

@@ -1,6 +1,6 @@
-import { Link } from "react-router";
-import { Button, LinkButton } from "./Button";
-import { useAuth } from "../../features/auth/contexts/AuthContext";
+import { Link } from 'react-router';
+import { Button, LinkButton } from './Button';
+import { useAuth } from '../../features/auth/contexts/AuthContext';
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -23,17 +23,18 @@ export function Header() {
             <LinkButton to="/profile" size="sm" variant="link">
               Profile
             </LinkButton>
-            <Button
-              onClick={signOut}
-              size="sm"
-            >
+            <Button onClick={signOut} size="sm">
               Sign Out
             </Button>
           </div>
         ) : (
           <div className="flex gap-4">
-            <LinkButton to="/signup" size="sm">Sign Up</LinkButton>
-            <LinkButton to="/signin" size="sm" variant="outline">Sign In</LinkButton>
+            <LinkButton to="/signup" size="sm">
+              Sign Up
+            </LinkButton>
+            <LinkButton to="/signin" size="sm" variant="outline">
+              Sign In
+            </LinkButton>
           </div>
         )}
       </div>

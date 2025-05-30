@@ -1,4 +1,10 @@
-import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Outlet,
+  Route,
+  RouterProvider,
+} from 'react-router';
 import { HomePage } from './shared/pages/HomePage';
 import { NotFoundPage } from './shared/pages/NotFoundPage';
 import { SignUpPage } from './features/auth/pages/SignUpPage';
@@ -13,20 +19,38 @@ import { ProtectedRoute } from './features/auth/components/ProtectedRoute';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route element={<HeaderLayout><Outlet /></HeaderLayout>}>
+      <Route
+        element={
+          <HeaderLayout>
+            <Outlet />
+          </HeaderLayout>
+        }
+      >
         <Route path="/" element={<HomePage />} />
-        <Route element={<ProtectedRoute><Outlet /></ProtectedRoute>}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/projects" element={<ProjectListPage />} />
         </Route>
       </Route>
 
-      <Route element={<DefaultLayout><Outlet /></DefaultLayout>}>
+      <Route
+        element={
+          <DefaultLayout>
+            <Outlet />
+          </DefaultLayout>
+        }
+      >
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
-    </>
-  )
+    </>,
+  ),
 );
 
 const queryClient = new QueryClient();

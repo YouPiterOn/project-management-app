@@ -15,21 +15,17 @@ export function HomePage() {
         <div className="border rounded-xl shadow-sm p-6 bg-background flex flex-col justify-between">
           <div>
             <h3 className="text-lg font-semibold mb-1">Manage Projects</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Create and organize your projects
-            </p>
-            <p className="mb-6">
-              Create new projects and track progress all in one place.
-            </p>
+            <p className="text-sm text-muted-foreground mb-4">Create and organize your projects</p>
+            <p className="mb-6">Create new projects and track progress all in one place.</p>
           </div>
-          <div className='flex flex-col gap-2'>
+          <div className="flex flex-col gap-2">
             <LinkButton to="/projects">
               <div className="flex items-center gap-2">
                 <ListTodo className="h-5 w-5" />
                 View Projects
               </div>
             </LinkButton>
-            <LinkButton to="/projects/new" variant='outline'>
+            <LinkButton to="/projects/new" variant="outline">
               <div className="flex items-center gap-2">
                 <PlusCircle className="h-5 w-5" />
                 Create Project
@@ -48,7 +44,7 @@ export function HomePage() {
               Create tasks, assign them to team members, and update their status as work progresses.
             </p>
           </div>
-          <div className='flex flex-col gap-2'>
+          <div className="flex flex-col gap-2">
             <LinkButton to="/dashboard">
               <div className="flex items-center gap-2">
                 <ListTodo className="h-5 w-5" />

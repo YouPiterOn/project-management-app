@@ -33,10 +33,7 @@ export class TaskController {
   @Get()
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedTasksDto })
-  async getPaginated(
-    @Query() baseQuery: TaskPaginationQueryDto,
-    @Query() filters: TaskFiltersDto,
-  ) {
+  async getPaginated(@Query() baseQuery: TaskPaginationQueryDto, @Query() filters: TaskFiltersDto) {
     return (await this.taskService.getPaginated({
       ...baseQuery,
       filters,

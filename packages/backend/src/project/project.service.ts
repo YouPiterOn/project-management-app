@@ -13,7 +13,7 @@ export class ProjectService {
     @InjectRepository(Project)
     private projectRepo: Repository<Project>,
     private userService: UserService,
-  ) { }
+  ) {}
 
   async create(title: string, description: string, ownerId: string) {
     const project = this.projectRepo.create({

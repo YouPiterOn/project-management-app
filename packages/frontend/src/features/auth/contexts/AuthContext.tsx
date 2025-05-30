@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { authUserSchema, type AuthUser, type SignInValues, type SignUpValues } from '../schemas';
 import { apiFetch } from '../../../shared/clients/apiClient';
 import { emptySchema } from '../../../shared/schemas';
@@ -39,13 +33,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     verify();
 
-    const intervalId = setInterval(() => {
-      authClient.verify()
-        .then(setUser)
-        .catch(() => {
-          setUser(null);
-        });
-    }, 5 * 60 * 1000);
+    const intervalId = setInterval(
+      () => {
+        authClient
+          .verify()
+          .then(setUser)
+          .catch(() => {
+            setUser(null);
+          });
+      },
+      5 * 60 * 1000,
+    );
 
     return () => clearInterval(intervalId);
   }, []);
@@ -66,9 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, isVerifying, signIn, signUp, signOut, verify }}
-    >
+    <AuthContext.Provider value={{ user, isVerifying, signIn, signUp, signOut, verify }}>
       {children}
     </AuthContext.Provider>
   );

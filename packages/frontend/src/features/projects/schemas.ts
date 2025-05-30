@@ -8,12 +8,11 @@ export const paginatedProjectsSchema = createPaginatedSchema(
     description: z.string(),
     owner: z.object({
       id: z.string(),
-      name: z.string()
+      name: z.string(),
     }),
-  })
+  }),
 );
 export type PaginatedProjects = z.infer<typeof paginatedProjectsSchema>;
-
 
 export const projectSchema = z.object({
   id: z.string(),
@@ -25,13 +24,11 @@ export const projectSchema = z.object({
 });
 export type Project = z.infer<typeof projectSchema>;
 
-
 export const createProjectSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
 });
 export type CreateProjectValues = z.infer<typeof createProjectSchema>;
-
 
 export const projectPaginationQuerySchema = z.object({
   sortBy: z.enum(['title', 'createdAt', 'updatedAt']).optional().default('createdAt'),
@@ -42,7 +39,7 @@ export const projectPaginationQuerySchema = z.object({
 
 export const projectFiltersSchema = z.object({
   ownerId: z.string().uuid().optional(),
-  title: z.string().optional()
+  title: z.string().optional(),
 });
 
 export const projectsQuerySchema = projectPaginationQuerySchema.merge(projectFiltersSchema);

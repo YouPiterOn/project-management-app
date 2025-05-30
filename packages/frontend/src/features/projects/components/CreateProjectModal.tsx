@@ -10,7 +10,12 @@ import { projectsClient } from '../clients/projectsClient';
 
 export function CreateProjectModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateProjectValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CreateProjectValues>({
     resolver: zodResolver(createProjectSchema),
   });
 
@@ -24,11 +29,7 @@ export function CreateProjectModal() {
 
   return (
     <>
-      <Button
-        onClick={() => setIsOpen(true)}
-      >
-        Create New Project
-      </Button>
+      <Button onClick={() => setIsOpen(true)}>Create New Project</Button>
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -36,15 +37,15 @@ export function CreateProjectModal() {
             <h2 className="text-xl font-bold mb-4">New Project</h2>
             <form onSubmit={handleSubmit(values => mutate(values))} className="space-y-4">
               <FormField
-                id='name'
+                id="name"
                 label="Title"
-                type='text'
+                type="text"
                 error={errors.title}
                 register={register('title', { required: 'Title is required' })}
               />
 
               <FormTextarea
-                id='description'
+                id="description"
                 label="Description"
                 rows={4}
                 error={errors.description}
@@ -64,15 +65,11 @@ export function CreateProjectModal() {
                     setIsOpen(false);
                     reset();
                   }}
-                  variant='outline'
+                  variant="outline"
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                >
-                  {isPending ? 'Creating...' : 'Create'}
-                </Button>
+                <Button type="submit">{isPending ? 'Creating...' : 'Create'}</Button>
               </div>
             </form>
           </div>
