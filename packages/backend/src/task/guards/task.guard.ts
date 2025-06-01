@@ -1,9 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { TaskService } from '../task.service';
 import { ProjectService } from 'src/project/project.service';
 import { Reflector } from '@nestjs/core';

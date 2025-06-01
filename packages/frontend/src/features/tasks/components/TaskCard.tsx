@@ -1,36 +1,36 @@
 import { User } from 'lucide-react';
-import { Link } from 'react-router';
 
 interface TaskCardProps {
-  id: string;
   title: string;
   description: string;
   assignee: {
     id: string;
     name: string;
   } | null;
-  draggable?: boolean;
+  editable?: boolean;
   onDragStart: (e: React.DragEvent) => void;
+  onTitleClick: () => void;
 }
 
 export function TaskCard({
-  id,
   title,
   description,
   assignee,
-  draggable = false,
+  editable = false,
   onDragStart,
+  onTitleClick,
 }: TaskCardProps) {
   return (
     <div
-      className={`bg-background border rounded-lg p-4 shadow-sm ${draggable && 'cursor-grab active:cursor-grabbing'}`}
-      draggable={draggable}
+      className={`bg-background border rounded-lg p-4 shadow-sm ${editable && 'cursor-grab active:cursor-grabbing'}`}
+      draggable={editable}
       onDragStart={onDragStart}
     >
-      <div className="flex justify-between items-start mb-2">
-        <Link to={`/tasks/${id}`} className="font-medium text-foreground">
-          {title}
-        </Link>
+      <div
+        className={`flex justify-between items-start mb-2 font-medium text-foreground ${editable && 'cursor-pointer underline-offset-4 hover:underline'}`}
+        onClick={editable ? onTitleClick : undefined}
+      >
+        {title}
       </div>
 
       <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{description}</p>

@@ -1,5 +1,5 @@
-import z from "zod";
-import { createPaginatedSchema } from "../../shared/schemas";
+import z from 'zod';
+import { createPaginatedSchema } from '../../shared/schemas';
 
 export const paginatedUsersSchema = createPaginatedSchema(
   z.object({

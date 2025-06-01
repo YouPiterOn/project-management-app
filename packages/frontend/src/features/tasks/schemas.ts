@@ -6,10 +6,12 @@ export const paginatedTaskSchema = z.object({
   title: z.string(),
   description: z.string(),
   status: z.enum(['todo', 'in_progress', 'done']),
-  assignee: z.object({
-    id: z.string(),
-    name: z.string(),
-  }).nullable(),
+  assignee: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+    })
+    .nullable(),
 });
 export type PaginatedTask = z.infer<typeof paginatedTaskSchema>;
 
@@ -30,14 +32,14 @@ export type Task = z.infer<typeof taskSchema>;
 export const createTaskFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
-})
+});
 export type CreateTaskFormValues = z.infer<typeof createTaskFormSchema>;
 
 export const createTaskSchema = createTaskFormSchema.merge(
   z.object({
     projectId: z.string().uuid(),
     assigneeId: z.string().uuid().optional(),
-  })
+  }),
 );
 export type CreateTaskValues = z.infer<typeof createTaskSchema>;
 

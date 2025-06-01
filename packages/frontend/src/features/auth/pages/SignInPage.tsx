@@ -5,8 +5,8 @@ import { FormField } from '../../../shared/components/FormField';
 import { Button, LinkButton } from '../../../shared/components/Button';
 import { ArrowLeft } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 
 export function SignInPage() {
   const {

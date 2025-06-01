@@ -39,7 +39,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="flex flex-col gap-2">
-            <LinkButton to="/dashboard" variant='outline'>
+            <LinkButton to="/dashboard" variant="outline">
               <div className="flex items-center gap-2">
                 <SquareKanban className="h-5 w-5" />
                 My Dashboard

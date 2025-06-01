@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProjectList } from '../components/ProjectList';
 import { Button } from '../../../shared/components/Button';
 import { projectsClient } from '../clients/projectsClient';
@@ -9,12 +9,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { Select } from '../../../shared/components/Select';
 import { ProjectSearchBar } from '../components/ProjectSearchBar';
 import { Checkbox } from '../../../shared/components/Checkbox';
-import { useAuth } from '../../auth/contexts/AuthContext';
+import { useAuth } from '../../auth/hooks/useAuth';
 
 export function ProjectListPage() {
+  const queryClient = useQueryClient();
+  
   const [searchParams, setSearchParams] = useSearchParams();
   const [onlyUserProjects, setOnlyUserProjects] = useState<boolean>(
-    searchParams.get('ownerId') !== null
+    searchParams.get('ownerId') !== null,
   );
 
   const { user } = useAuth();
@@ -36,6 +38,8 @@ export function ProjectListPage() {
     queryFn: () => projectsClient.getPaginated(query),
   });
 
+  const onProjectCreate = () => queryClient.invalidateQueries({ queryKey: ['projects'] })
+
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams);
     if (onlyUserProjects && user?.id) {
@@ -50,8 +54,12 @@ export function ProjectListPage() {
   return (
     <div className="w-full max-w-5xl">
       <div className="flex flex-row justify-between mb-4">
-        <Checkbox checked={onlyUserProjects} onChange={(v) => setOnlyUserProjects(v)} label='Only my projects' />
-        <CreateProjectModal />
+        <Checkbox
+          checked={onlyUserProjects}
+          onChange={v => setOnlyUserProjects(v)}
+          label="Only my projects"
+        />
+        <CreateProjectModal onSuccess={onProjectCreate}/>
       </div>
       <div className="flex flex-col items-center gap-6 mb-8 md:flex-row">
         <div className="flex-1 w-full md:w-auto">

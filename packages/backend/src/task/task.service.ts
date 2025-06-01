@@ -62,7 +62,7 @@ export class TaskService {
     if (payload.status !== undefined) task.status = payload.status;
 
     if (payload.assigneeId !== undefined) {
-      if(payload.assigneeId !== null) {
+      if (payload.assigneeId !== null) {
         const assignee = await this.userService.findById(payload.assigneeId);
         if (assignee !== null) task.assigneeId = assignee.id;
       } else {

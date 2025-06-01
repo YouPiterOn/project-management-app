@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import { signUpSchema, type SignUpValues } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 
 export function SignUpPage() {
   const {

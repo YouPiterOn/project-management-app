@@ -22,12 +22,15 @@ async function create(data: CreateTaskValues): Promise<Task> {
   });
 }
 
-async function update(taskId: string, data: {
-  title?: string;
-  description?: string;
-  assigneeId?: string | null;
-  status?: TaskStatus
-}) {
+async function update(
+  taskId: string,
+  data: {
+    title?: string;
+    description?: string;
+    assigneeId?: string | null;
+    status?: TaskStatus;
+  },
+) {
   return apiFetch(`/tasks/${taskId}`, taskSchema, {
     method: 'PATCH',
     body: JSON.stringify(data),

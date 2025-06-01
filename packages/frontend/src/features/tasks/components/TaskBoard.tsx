@@ -2,8 +2,11 @@ import { Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { TaskColumn } from './TaskColumn';
 import { TaskCard, TaskCardSkeleton } from './TaskCard';
 import type { PaginatedTask, TaskStatus } from '../schemas';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { filterTasks } from '../utils';
+import type { TaskToEdit } from '../types';
+import { EditTaskModal } from './EditTaskModal';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface TaskBoardProps {
   tasks?: PaginatedTask[];
@@ -22,6 +25,10 @@ export default function TaskBoard({
   currentUserId,
   projectOwnerId,
 }: TaskBoardProps) {
+  const queryClient = useQueryClient();
+
+  const [taskToEdit, setTaskToEdit] = useState<TaskToEdit | null>(null);
+
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
     e.dataTransfer.setData('taskId', taskId);
   };
@@ -56,13 +63,13 @@ export default function TaskBoard({
             todoTasks.map(task => (
               <TaskCard
                 key={task.id}
-                draggable={
-                  currentUserId && projectOwnerId
+                editable={
+                  currentUserId
                     ? task.assignee?.id === currentUserId || projectOwnerId === currentUserId
                     : false
                 }
                 onDragStart={e => handleDragStart(e, task.id)}
-                id={task.id}
+                onTitleClick={() => setTaskToEdit(task)}
                 title={task.title}
                 description={task.description}
                 assignee={task.assignee}
@@ -83,9 +90,13 @@ export default function TaskBoard({
             inProgressTasks.map(task => (
               <TaskCard
                 key={task.id}
-                draggable={task.assignee?.id === currentUserId || projectOwnerId === currentUserId}
+                editable={
+                  currentUserId
+                    ? task.assignee?.id === currentUserId || projectOwnerId === currentUserId
+                    : false
+                }
                 onDragStart={e => handleDragStart(e, task.id)}
-                id={task.id}
+                onTitleClick={() => setTaskToEdit(task)}
                 title={task.title}
                 description={task.description}
                 assignee={task.assignee}
@@ -106,9 +117,13 @@ export default function TaskBoard({
             doneTasks.map(task => (
               <TaskCard
                 key={task.id}
-                draggable={task.assignee?.id === currentUserId || projectOwnerId === currentUserId}
+                editable={
+                  currentUserId
+                    ? task.assignee?.id === currentUserId || projectOwnerId === currentUserId
+                    : false
+                }
                 onDragStart={e => handleDragStart(e, task.id)}
-                id={task.id}
+                onTitleClick={() => setTaskToEdit(task)}
                 title={task.title}
                 description={task.description}
                 assignee={task.assignee}
@@ -117,6 +132,17 @@ export default function TaskBoard({
           )}
         </TaskColumn>
       </div>
+
+      {taskToEdit && (
+        <EditTaskModal
+          task={taskToEdit}
+          onSuccess={() => {
+            queryClient.invalidateQueries();
+            setTaskToEdit(null);
+          }}
+          onCancel={() => setTaskToEdit(null)}
+        />
+      )}
     </div>
   );
 }

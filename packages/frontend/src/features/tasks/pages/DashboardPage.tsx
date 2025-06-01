@@ -2,11 +2,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { tasksClient } from '../../tasks/clients/tasksClient';
 import TaskBoard from '../../tasks/components/TaskBoard';
 import { type TaskStatus } from '../../tasks/schemas';
-import { useAuth } from '../../auth/contexts/AuthContext';
+import { useAuth } from '../../auth/hooks/useAuth';
 
 export function DashboardPage() {
   const { user } = useAuth();
-  if(user === null) throw new Error("Use page only in protected route");
+  if (user === null) throw new Error('Use page only in protected route');
 
   const queryClient = useQueryClient();
 
@@ -18,7 +18,7 @@ export function DashboardPage() {
         sortOrder: 'ASC',
         page: 1,
         pageSize: 50,
-        assigneeId: user.id
+        assigneeId: user.id,
       });
     },
     enabled: !!user?.id,

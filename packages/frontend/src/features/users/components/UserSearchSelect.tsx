@@ -3,11 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { SearchSelect } from '../../../shared/components/SearchSelect';
 import { usersClient } from '../clients/usersClient';
 
-export function UserSearchSelect({
-  onSelect,
-}: {
-  onSelect: (id: string) => void;
-}) {
+export function UserSearchSelect({ onSelect }: { onSelect: (id: string) => void }) {
   const [inputValue, setInputValue] = useState('');
 
   const { data, refetch } = useQuery({
@@ -20,7 +16,7 @@ export function UserSearchSelect({
         page: 1,
         pageSize: 10,
         email: inputValue,
-      })
+      });
       return data.items;
     },
     enabled: false,
@@ -32,7 +28,7 @@ export function UserSearchSelect({
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [inputValue]);
+  }, [inputValue, refetch]);
 
   const options = useMemo(
     () =>
@@ -48,8 +44,8 @@ export function UserSearchSelect({
       label="Assign to"
       options={options}
       value={inputValue}
-      onSelect={(option) => onSelect(option.value)}
-      onValueChange={(value) => setInputValue(value)}
+      onSelect={option => onSelect(option.value)}
+      onValueChange={value => setInputValue(value)}
       placeholder="Search by email"
     />
   );

@@ -53,10 +53,7 @@ export function CreateTaskModal({ projectId, onSuccess }: CreateTaskModalProps) 
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-background p-6 rounded-xl shadow-lg w-full max-w-md">
             <h2 className="text-xl font-bold mb-4">New Task</h2>
-            <form
-              onSubmit={handleSubmit((values) => mutate(values))}
-              className="space-y-4"
-            >
+            <form onSubmit={handleSubmit(values => mutate(values))} className="space-y-4">
               <FormField
                 id="title"
                 label="Title"
@@ -73,7 +70,7 @@ export function CreateTaskModal({ projectId, onSuccess }: CreateTaskModalProps) 
                 register={register('description')}
               />
 
-              <UserSearchSelect onSelect={(value) => setAssigneeId(value)} />
+              <UserSearchSelect onSelect={value => setAssigneeId(value)} />
 
               {error && (
                 <p className="text-sm text-destructive text-center">

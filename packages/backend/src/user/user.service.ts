@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
-  ) { }
+  ) {}
 
   async create(email: string, password: string, name: string) {
     const passwordHash = await this.hashPassword(password);

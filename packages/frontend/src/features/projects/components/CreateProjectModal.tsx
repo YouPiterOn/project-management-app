@@ -8,7 +8,11 @@ import { createProjectSchema, type CreateProjectValues } from '../schemas';
 import { useMutation } from '@tanstack/react-query';
 import { projectsClient } from '../clients/projectsClient';
 
-export function CreateProjectModal() {
+interface CreateProjectModalProps {
+  onSuccess: () => void;
+}
+
+export function CreateProjectModal({ onSuccess }: CreateProjectModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const {
     register,
@@ -24,6 +28,7 @@ export function CreateProjectModal() {
     onSuccess: () => {
       setIsOpen(false);
       reset();
+      onSuccess();
     },
   });
 

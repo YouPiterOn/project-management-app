@@ -1,20 +1,24 @@
-import { Search, X, ChevronDown } from "lucide-react"
-import { forwardRef, useState, useEffect, useRef } from "react"
+import { Search, X, ChevronDown } from 'lucide-react';
+import { forwardRef, useState, useEffect, useRef } from 'react';
 
 interface Option {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
-interface SearchSelectProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "onChange " | "onSelect"> {
-  label?: string
-  options: Option[]
-  value?: string
-  onValueChange?: (value: string) => void
-  onSelect?: (option: Option) => void
-  onClear?: () => void
-  showClearButton?: boolean
-  filterLocally?: boolean
+interface SearchSelectProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'type' | 'value' | 'onChange ' | 'onSelect'
+  > {
+  label?: string;
+  options: Option[];
+  value?: string;
+  onValueChange?: (value: string) => void;
+  onSelect?: (option: Option) => void;
+  onClear?: () => void;
+  showClearButton?: boolean;
+  filterLocally?: boolean;
 }
 
 export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
@@ -28,89 +32,91 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
       onClear,
       showClearButton = true,
       filterLocally = true,
-      placeholder = "Search or select...",
+      placeholder = 'Search or select...',
       ...props
     },
     ref,
   ) => {
-    const [inputValue, setInputValue] = useState("")
-    const [isOpen, setIsOpen] = useState(false)
-    const [filteredOptions, setFilteredOptions] = useState<Option[]>(options)
-    const [selectedOption, setSelectedOption] = useState<Option | null>(null)
+    const [inputValue, setInputValue] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [filteredOptions, setFilteredOptions] = useState<Option[]>(options);
+    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
-    const containerRef = useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       if (value) {
-        const option = options.find((opt) => opt.value === value)
+        const option = options.find(opt => opt.value === value);
         if (option) {
-          setSelectedOption(option)
-          setInputValue(option.label)
+          setSelectedOption(option);
+          setInputValue(option.label);
         }
       } else {
-        setSelectedOption(null)
-        setInputValue("")
+        setSelectedOption(null);
+        setInputValue('');
       }
-    }, [value, options])
+    }, [value, options]);
 
     useEffect(() => {
       if (filterLocally) {
-        setFilteredOptions(options.filter((opt) => opt.label.toLowerCase().includes(inputValue.toLowerCase())))
+        setFilteredOptions(
+          options.filter(opt => opt.label.toLowerCase().includes(inputValue.toLowerCase())),
+        );
       } else {
-        setFilteredOptions(options)
+        setFilteredOptions(options);
       }
-    }, [inputValue, options, filterLocally])
+    }, [inputValue, options, filterLocally]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value
-      setInputValue(newValue)
-      onValueChange?.(newValue)
+      const newValue = e.target.value;
+      setInputValue(newValue);
+      onValueChange?.(newValue);
 
       if (selectedOption && newValue !== selectedOption.label) {
-        setSelectedOption(null)
+        setSelectedOption(null);
       }
 
-      setIsOpen(true)
-    }
+      setIsOpen(true);
+    };
 
     const handleSelect = (option: Option) => {
-      setSelectedOption(option)
-      setInputValue(option.label)
-      setIsOpen(false)
-      onSelect?.(option)
-      onValueChange?.(option.value)
-    }
+      setSelectedOption(option);
+      setInputValue(option.label);
+      setIsOpen(false);
+      onSelect?.(option);
+      onValueChange?.(option.value);
+    };
 
     const handleClear = () => {
-      setInputValue("")
-      setSelectedOption(null)
-      setIsOpen(false)
-      onClear?.()
-      onValueChange?.("")
-    }
+      setInputValue('');
+      setSelectedOption(null);
+      setIsOpen(false);
+      onClear?.();
+      onValueChange?.('');
+    };
 
     const handleFocus = () => {
-      setIsOpen(true)
-    }
+      setIsOpen(true);
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsOpen(false)
-      } else if (e.key === "ArrowDown") {
-        e.preventDefault()
-        setIsOpen(true)
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setIsOpen(true);
       }
-    }
+    };
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-          setIsOpen(false)
+          setIsOpen(false);
         }
-      }
-      document.addEventListener("mousedown", handleClickOutside)
-      return () => document.removeEventListener("mousedown", handleClickOutside)
-    }, [])
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     return (
       <div className="w-full" ref={containerRef}>
@@ -138,26 +144,30 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
           />
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
             {showClearButton && (inputValue || selectedOption) && (
-              <button type="button" onClick={handleClear} className="p-1 hover:bg-muted rounded-md transition-colors">
+              <button
+                type="button"
+                onClick={handleClear}
+                className="p-1 hover:bg-muted rounded-md transition-colors"
+              >
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             )}
             <ChevronDown
-              className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
+              className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`}
             />
           </div>
 
           {isOpen && (
             <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-xl shadow-lg max-h-60 overflow-auto">
               {filteredOptions.length > 0 ? (
-                filteredOptions.map((option) => (
+                filteredOptions.map(option => (
                   <div
                     key={option.value}
                     onClick={() => handleSelect(option)}
                     className={`
                       px-4 py-3 cursor-pointer transition-colors
                       hover:bg-muted
-                      ${selectedOption?.value === option.value ? "bg-muted" : ""}
+                      ${selectedOption?.value === option.value ? 'bg-muted' : ''}
                     `}
                   >
                     {option.label}
@@ -170,8 +180,8 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
           )}
         </div>
       </div>
-    )
+    );
   },
-)
+);
 
-SearchSelect.displayName = "SearchSelect"
+SearchSelect.displayName = 'SearchSelect';

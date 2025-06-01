@@ -32,11 +32,11 @@ export class UserController {
   @Get()
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedUsersDto })
-  async getPaginated(
-    @Query() baseQuery: UserPaginationQueryDto,
-    @Query() filters: UserFiltersDto
-  ) {
-    return (await this.userService.getPaginated({ filters, ...baseQuery })) as ResponsePaginatedUsersDto;
+  async getPaginated(@Query() baseQuery: UserPaginationQueryDto, @Query() filters: UserFiltersDto) {
+    return (await this.userService.getPaginated({
+      filters,
+      ...baseQuery,
+    })) as ResponsePaginatedUsersDto;
   }
 
   @Get(':id')

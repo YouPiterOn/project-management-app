@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { Button, LinkButton } from './Button';
-import { useAuth } from '../../features/auth/contexts/AuthContext';
+import { useAuth } from '../../features/auth/hooks/useAuth';
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -19,9 +19,6 @@ export function Header() {
             </LinkButton>
             <LinkButton to="/projects" size="sm" variant="link">
               Projects
-            </LinkButton>
-            <LinkButton to="/profile" size="sm" variant="link">
-              Profile
             </LinkButton>
             <Button onClick={signOut} size="sm">
               Sign Out
