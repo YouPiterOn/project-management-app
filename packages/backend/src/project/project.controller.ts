@@ -22,10 +22,10 @@ import { ProjectCreateDto } from './dto/project-create.dto';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
-import { ProjectOwnerOrRolesGuard } from './guards/project-owner-or-roles.guard';
 import { ResponseProjectDto } from './dto/response-project.dto';
 import { ResponsePaginatedProjectsDto } from './dto/response-paginated-projects.dto';
 import { ProjectGetByIdQueryDto } from './dto/project-get-by-id-query.dto';
+import { ProjectGuard } from './guards/project.guard';
 
 @Controller('projects')
 @ApiBearerAuth()
@@ -61,7 +61,7 @@ export class ProjectController {
   }
 
   @Patch(':id')
-  @UseGuards(ProjectOwnerOrRolesGuard)
+  @UseGuards(ProjectGuard)
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
@@ -70,7 +70,7 @@ export class ProjectController {
   }
 
   @Put(':id')
-  @UseGuards(ProjectOwnerOrRolesGuard)
+  @UseGuards(ProjectGuard)
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
@@ -79,7 +79,7 @@ export class ProjectController {
   }
 
   @Delete(':id')
-  @UseGuards(ProjectOwnerOrRolesGuard)
+  @UseGuards(ProjectGuard)
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })

@@ -5,12 +5,19 @@ import { projectsClient } from '../clients/projectsClient';
 import { CreateProjectModal } from '../components/CreateProjectModal';
 import { useProjectsQuery } from '../hooks/useProjectsQuery';
 import { useSearchParams } from 'react-router';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Select } from '../../../shared/components/Select';
 import { ProjectSearchBar } from '../components/ProjectSearchBar';
+import { Checkbox } from '../../../shared/components/Checkbox';
+import { useAuth } from '../../auth/contexts/AuthContext';
 
 export function ProjectListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [onlyUserProjects, setOnlyUserProjects] = useState<boolean>(
+    searchParams.get('ownerId') !== null
+  );
+
+  const { user } = useAuth();
 
   const query = useProjectsQuery(searchParams);
   const { page, pageSize } = query;
@@ -29,10 +36,21 @@ export function ProjectListPage() {
     queryFn: () => projectsClient.getPaginated(query),
   });
 
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+    if (onlyUserProjects && user?.id) {
+      newParams.set('ownerId', user.id);
+    } else {
+      newParams.delete('ownerId');
+    }
+    newParams.set('page', '1');
+    setSearchParams(newParams);
+  }, [onlyUserProjects, user?.id]);
+
   return (
     <div className="w-full max-w-5xl">
       <div className="flex flex-row justify-between mb-4">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Projects</h1>
+        <Checkbox checked={onlyUserProjects} onChange={(v) => setOnlyUserProjects(v)} label='Only my projects' />
         <CreateProjectModal />
       </div>
       <div className="flex flex-col items-center gap-6 mb-8 md:flex-row">

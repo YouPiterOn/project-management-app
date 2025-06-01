@@ -22,7 +22,7 @@ export class TaskService {
     title: string,
     description: string,
     projectId: string,
-    assigneeId?: string,
+    assigneeId?: string | null,
     status: TaskStatus = TaskStatus.TODO,
   ) {
     await this.projectService.findById(projectId);
@@ -52,7 +52,7 @@ export class TaskService {
       title?: string;
       description?: string;
       status?: TaskStatus;
-      assigneeId?: string;
+      assigneeId?: string | null;
     },
   ) {
     const task = await this.findById(id);
@@ -62,8 +62,12 @@ export class TaskService {
     if (payload.status !== undefined) task.status = payload.status;
 
     if (payload.assigneeId !== undefined) {
-      const assignee = await this.userService.findById(payload.assigneeId);
-      if (assignee !== null) task.assigneeId = assignee.id;
+      if(payload.assigneeId !== null) {
+        const assignee = await this.userService.findById(payload.assigneeId);
+        if (assignee !== null) task.assigneeId = assignee.id;
+      } else {
+        task.assigneeId = null;
+      }
     }
 
     return await this.taskRepo.save(task);
@@ -75,7 +79,7 @@ export class TaskService {
       title: string;
       description: string;
       status: TaskStatus;
-      assigneeId?: string;
+      assigneeId: string | null;
     },
   ) {
     const task = await this.findById(id);
@@ -84,11 +88,11 @@ export class TaskService {
     task.description = payload.description;
     task.status = payload.status;
 
-    if (payload.assigneeId !== undefined) {
+    if (payload.assigneeId !== null) {
       const assignee = await this.userService.findById(payload.assigneeId);
-      task.assigneeId = assignee ? assignee.id : undefined;
+      task.assigneeId = assignee ? assignee.id : null;
     } else {
-      task.assigneeId = undefined;
+      task.assigneeId = null;
     }
 
     return await this.taskRepo.save(task);

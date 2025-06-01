@@ -16,6 +16,7 @@ import { DefaultLayout } from './shared/components/DefaultLayout';
 import { AuthProvider } from './features/auth/contexts/AuthContext';
 import { ProtectedRoute } from './features/auth/components/ProtectedRoute';
 import { ProjectPage } from './features/projects/pages/ProjectPage';
+import { DashboardPage } from './features/tasks/pages/DashboardPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         >
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/projects" element={<ProjectListPage />} />
           <Route path="/projects/:projectId" element={<ProjectPage />} />
         </Route>

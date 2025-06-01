@@ -1,11 +1,19 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { TaskService } from '../task.service';
 import { ProjectService } from 'src/project/project.service';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from 'src/common/decorators/roles.decorator';
 
+/**
+ * Allows access to endpoint only to task assignee, project owner, or any user of specified roles
+ */
 @Injectable()
-export class TaskProjectOwnerOrRolesGuard implements CanActivate {
+export class TaskGuard implements CanActivate {
   constructor(
     private taskService: TaskService,
     private projectService: ProjectService,
@@ -30,23 +38,28 @@ export class TaskProjectOwnerOrRolesGuard implements CanActivate {
     }
 
     let projectId: string | undefined;
+    let assigneeId: string | undefined | null;
 
-    if (body.projectId) {
-      projectId = body.projectId;
-    } else if (params.id) {
+    projectId = body.projectId;
+    assigneeId = body.assigneeId;
+
+    if ((!projectId || assigneeId === undefined) && params.id) {
       const task = await this.taskService.findById(params.id);
       projectId = task.projectId;
+      assigneeId = task.assigneeId;
     }
 
     if (!projectId) {
-      throw new ForbiddenException('Unable to resolve project ID from task');
+      throw new ForbiddenException('Project ID could not be determined');
     }
 
-    const isOwner = await this.projectService.isOwner(projectId, user.id);
-    if (!isOwner) {
-      throw new ForbiddenException('User does not own the related project');
+    const isOwner = await this.projectService.isOwner(projectId, user.sub);
+    const isAssignee = assigneeId === user.sub;
+
+    if (isOwner || isAssignee) {
+      return true;
     }
 
-    return true;
+    throw new ForbiddenException('Access denied: not project owner or task assignee');
   }
 }

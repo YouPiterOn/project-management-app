@@ -4,7 +4,7 @@ import { ROLES_KEY } from 'src/common/decorators/roles.decorator';
 import { ProjectService } from '../project.service';
 
 @Injectable()
-export class ProjectOwnerOrRolesGuard implements CanActivate {
+export class ProjectGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private projectService: ProjectService,
@@ -32,7 +32,7 @@ export class ProjectOwnerOrRolesGuard implements CanActivate {
       throw new ForbiddenException('Missing project ID for ownership check');
     }
 
-    const isOwner = await this.projectService.isOwner(projectId, user.id);
+    const isOwner = await this.projectService.isOwner(projectId, user.sub);
     if (!isOwner) {
       throw new ForbiddenException('Not the project owner');
     }

@@ -22,6 +22,7 @@ import { UserPutDto } from './dto/user-put.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { ResponsePaginatedUsersDto } from './dto/response-paginated-users.dto';
 import { withoutPassword } from './user.util';
+import { UserFiltersDto } from './dto/user-filters.dto';
 
 @Controller('users')
 @ApiBearerAuth()
@@ -31,8 +32,11 @@ export class UserController {
   @Get()
   @HttpCode(200)
   @ApiOkResponse({ type: ResponsePaginatedUsersDto })
-  async getPaginated(@Query() baseQuery: UserPaginationQueryDto) {
-    return (await this.userService.getPaginated(baseQuery)) as ResponsePaginatedUsersDto;
+  async getPaginated(
+    @Query() baseQuery: UserPaginationQueryDto,
+    @Query() filters: UserFiltersDto
+  ) {
+    return (await this.userService.getPaginated({ filters, ...baseQuery })) as ResponsePaginatedUsersDto;
   }
 
   @Get(':id')

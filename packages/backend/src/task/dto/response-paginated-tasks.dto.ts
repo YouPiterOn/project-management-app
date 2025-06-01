@@ -21,7 +21,7 @@ export class PaginatedTask {
   @ApiProperty()
   status: TaskStatus;
   @ApiProperty({ type: Assignee, nullable: true })
-  assignee?: Assignee;
+  assignee: Assignee | null;
 }
 
 export class ResponsePaginatedTasksDto extends ResponsePaginatedDto {

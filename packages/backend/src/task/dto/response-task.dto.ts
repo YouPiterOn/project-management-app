@@ -15,7 +15,7 @@ export class ResponseTaskDto {
   projectId: string;
 
   @ApiProperty()
-  assigneeId: string;
+  assigneeId: string | null;
 
   @ApiProperty()
   status: TaskStatus;

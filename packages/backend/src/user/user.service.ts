@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { PaginationQueryOptions } from 'src/common/types/pagination-query-options.type';
 import { UserNotFoundException } from 'src/common/exceptions/not-found.exceptions';
@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepo: Repository<User>,
-  ) {}
+  ) { }
 
   async create(email: string, password: string, name: string) {
     const passwordHash = await this.hashPassword(password);
@@ -93,7 +93,10 @@ export class UserService {
 
     const [users, totalItems] = await this.userRepo.findAndCount({
       select: ['id', 'email', 'name', 'role'],
-      where: filters,
+      where: {
+        ...filters,
+        email: filters.email ? ILike(`%${filters.email}%`) : undefined,
+      },
       skip,
       take: pageSize,
       order: { [sortBy]: sortOrder },

@@ -8,7 +8,7 @@ interface TaskCardProps {
   assignee: {
     id: string;
     name: string;
-  };
+  } | null;
   draggable?: boolean;
   onDragStart: (e: React.DragEvent) => void;
 }
@@ -38,7 +38,7 @@ export function TaskCard({
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <div className="flex items-center gap-1">
           <User className="h-4 w-4" />
-          <span>{assignee.name}</span>
+          <span>{assignee?.name || ' - '}</span>
         </div>
       </div>
     </div>

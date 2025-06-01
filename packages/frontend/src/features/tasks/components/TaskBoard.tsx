@@ -58,7 +58,7 @@ export default function TaskBoard({
                 key={task.id}
                 draggable={
                   currentUserId && projectOwnerId
-                    ? task.assignee.id === currentUserId || projectOwnerId === currentUserId
+                    ? task.assignee?.id === currentUserId || projectOwnerId === currentUserId
                     : false
                 }
                 onDragStart={e => handleDragStart(e, task.id)}
@@ -83,7 +83,7 @@ export default function TaskBoard({
             inProgressTasks.map(task => (
               <TaskCard
                 key={task.id}
-                draggable={task.assignee.id === currentUserId || projectOwnerId === currentUserId}
+                draggable={task.assignee?.id === currentUserId || projectOwnerId === currentUserId}
                 onDragStart={e => handleDragStart(e, task.id)}
                 id={task.id}
                 title={task.title}
@@ -106,7 +106,7 @@ export default function TaskBoard({
             doneTasks.map(task => (
               <TaskCard
                 key={task.id}
-                draggable={task.assignee.id === currentUserId || projectOwnerId === currentUserId}
+                draggable={task.assignee?.id === currentUserId || projectOwnerId === currentUserId}
                 onDragStart={e => handleDragStart(e, task.id)}
                 id={task.id}
                 title={task.title}

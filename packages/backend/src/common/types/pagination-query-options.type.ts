@@ -1,7 +1,9 @@
-type Primitive = string | number | boolean | Date | undefined;
+type Primitive = string | number | boolean | Date;
 
 type Filterable<T> = Partial<{
-  [K in keyof T]: T[K] extends Primitive ? T[K] : never;
+  [K in keyof T]: T[K] extends Primitive | null | undefined
+    ? Exclude<T[K], null | undefined>
+    : never;
 }>;
 
 export type PaginationQueryOptions<T> = {

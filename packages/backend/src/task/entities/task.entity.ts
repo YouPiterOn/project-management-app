@@ -31,10 +31,10 @@ export class Task {
 
   @ManyToOne(() => User, user => user.tasks, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'assigneeId' })
-  assignee?: User;
+  assignee: User | null;
 
   @Column({ nullable: true })
-  assigneeId?: string;
+  assigneeId: string | null;
 
   @Column({
     type: 'enum',

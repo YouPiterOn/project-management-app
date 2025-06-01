@@ -16,7 +16,7 @@ import { TaskService } from './task.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Role } from 'src/common/enums/role.enum';
-import { TaskProjectOwnerOrRolesGuard } from './guards/task-project-owner-or-roles.guard';
+import { TaskGuard } from './guards/task.guard';
 import { TaskPaginationQueryDto } from './dto/task-pagination-query.dto';
 import { TaskFiltersDto } from './dto/task-filters.dto';
 import { ResponsePaginatedTasksDto } from './dto/response-paginated-tasks.dto';
@@ -41,7 +41,7 @@ export class TaskController {
   }
 
   @Post()
-  @UseGuards(TaskProjectOwnerOrRolesGuard)
+  @UseGuards(TaskGuard)
   @Roles(Role.ADMIN)
   @HttpCode(201)
   @ApiCreatedResponse({ type: ResponseTaskDto })
@@ -64,7 +64,7 @@ export class TaskController {
   }
 
   @Patch(':id')
-  @UseGuards(TaskProjectOwnerOrRolesGuard)
+  @UseGuards(TaskGuard)
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })
@@ -73,7 +73,7 @@ export class TaskController {
   }
 
   @Put(':id')
-  @UseGuards(TaskProjectOwnerOrRolesGuard)
+  @UseGuards(TaskGuard)
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })
@@ -82,7 +82,7 @@ export class TaskController {
   }
 
   @Delete(':id')
-  @UseGuards(TaskProjectOwnerOrRolesGuard)
+  @UseGuards(TaskGuard)
   @Roles(Role.ADMIN)
   @HttpCode(200)
   @ApiOkResponse({ type: ResponseTaskDto })

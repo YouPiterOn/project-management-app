@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { FindOptionsRelations, FindOptionsSelect, ILike, Repository } from 'typeorm';
 import { Project } from './entities/project.entity';
 import { PaginationQueryOptions } from 'src/common/types/pagination-query-options.type';
 import { ProjectNotFoundException } from 'src/common/exceptions/not-found.exceptions';
@@ -26,7 +26,7 @@ export class ProjectService {
   }
 
   async findById(id: string, options: { includeTasks: boolean } = { includeTasks: false }) {
-    const relations: any = {
+    const relations: FindOptionsRelations<Project> = {
       owner: true,
     };
 
@@ -36,7 +36,7 @@ export class ProjectService {
       };
     }
 
-    const select: any = {
+    const select: FindOptionsSelect<Project> = {
       id: true,
       title: true,
       description: true,

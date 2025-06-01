@@ -1,4 +1,4 @@
-import { PlusCircle, ListTodo } from 'lucide-react';
+import { SquareKanban, ListTodo } from 'lucide-react';
 import { LinkButton } from '../components/Button';
 
 export function HomePage() {
@@ -16,19 +16,13 @@ export function HomePage() {
           <div>
             <h3 className="text-lg font-semibold mb-1">Manage Projects</h3>
             <p className="text-sm text-muted-foreground mb-4">Create and organize your projects</p>
-            <p className="mb-6">Create new projects and track progress all in one place.</p>
+            <p className="mb-6">Create new projects and track progress in one place.</p>
           </div>
           <div className="flex flex-col gap-2">
             <LinkButton to="/projects">
               <div className="flex items-center gap-2">
                 <ListTodo className="h-5 w-5" />
                 View Projects
-              </div>
-            </LinkButton>
-            <LinkButton to="/projects/new" variant="outline">
-              <div className="flex items-center gap-2">
-                <PlusCircle className="h-5 w-5" />
-                Create Project
               </div>
             </LinkButton>
           </div>
@@ -45,9 +39,9 @@ export function HomePage() {
             </p>
           </div>
           <div className="flex flex-col gap-2">
-            <LinkButton to="/dashboard">
+            <LinkButton to="/dashboard" variant='outline'>
               <div className="flex items-center gap-2">
-                <ListTodo className="h-5 w-5" />
+                <SquareKanban className="h-5 w-5" />
                 My Dashboard
               </div>
             </LinkButton>

@@ -14,9 +14,8 @@ export class TaskPutDto {
   description: string;
 
   @ApiProperty()
-  @IsOptional()
   @IsUUID()
-  assigneeId?: string;
+  assigneeId: string | null;
 
   @ApiProperty()
   @IsNotEmpty()
