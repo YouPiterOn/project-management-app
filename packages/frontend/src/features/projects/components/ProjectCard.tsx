@@ -21,7 +21,7 @@ export function ProjectCard({ id, title, description, owner }: ProjectCardProps)
         <h2 className="text-lg font-semibold mb-1 group-hover:underline transition underline-offset-4">
           {title}
         </h2>
-        <p className="max-w-full text-sm text-muted-foreground overflow-hidden text-ellipsis">
+        <p className="max-w-full text-sm text-muted-foreground truncate">
           {description}
         </p>
       </div>

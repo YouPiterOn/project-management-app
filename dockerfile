@@ -31,7 +31,6 @@ WORKDIR /app
 COPY --from=backend-builder /app/packages/backend/dist ./dist
 COPY --from=backend-builder /app/node_modules ./node_modules
 COPY packages/backend/package.json ./
-COPY packages/backend/.env.production .env.production
 
 ENV NODE_ENV=production
 
