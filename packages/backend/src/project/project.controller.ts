@@ -25,6 +25,7 @@ import { Role } from 'src/common/enums/role.enum';
 import { ProjectOwnerOrRolesGuard } from './guards/project-owner-or-roles.guard';
 import { ResponseProjectDto } from './dto/response-project.dto';
 import { ResponsePaginatedProjectsDto } from './dto/response-paginated-projects.dto';
+import { ProjectGetByIdQueryDto } from './dto/project-get-by-id-query.dto';
 
 @Controller('projects')
 @ApiBearerAuth()
@@ -55,8 +56,8 @@ export class ProjectController {
   @Get(':id')
   @HttpCode(200)
   @ApiCreatedResponse({ type: ResponseProjectDto })
-  async getById(@Param('id', ParseUUIDPipe) id: string) {
-    return (await this.projectService.findById(id)) as ResponseProjectDto;
+  async getById(@Param('id', ParseUUIDPipe) id: string, @Query() query: ProjectGetByIdQueryDto) {
+    return (await this.projectService.findById(id, query)) as ResponseProjectDto;
   }
 
   @Patch(':id')

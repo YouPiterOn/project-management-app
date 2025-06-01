@@ -15,6 +15,7 @@ import { HeaderLayout } from './shared/components/HeaderLayout';
 import { DefaultLayout } from './shared/components/DefaultLayout';
 import { AuthProvider } from './features/auth/contexts/AuthContext';
 import { ProtectedRoute } from './features/auth/components/ProtectedRoute';
+import { ProjectPage } from './features/projects/pages/ProjectPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
           }
         >
           <Route path="/projects" element={<ProjectListPage />} />
+          <Route path="/projects/:projectId" element={<ProjectPage />} />
         </Route>
       </Route>
 

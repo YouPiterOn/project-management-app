@@ -25,8 +25,47 @@ export class ProjectService {
     return await this.projectRepo.save(project);
   }
 
-  async findById(id: string) {
+  async findById(id: string, options: { includeTasks: boolean } = { includeTasks: false }) {
+    const relations: any = {
+      owner: true,
+    };
+
+    if (options.includeTasks) {
+      relations.tasks = {
+        assignee: true,
+      };
+    }
+
+    const select: any = {
+      id: true,
+      title: true,
+      description: true,
+      createdAt: true,
+      updatedAt: true,
+      owner: {
+        id: true,
+        name: true,
+      },
+    };
+
+    if (options.includeTasks) {
+      select.tasks = {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+        assignee: {
+          id: true,
+          name: true,
+        },
+      };
+    }
+
     const project = await this.projectRepo.findOne({
+      select,
+      relations,
       where: { id },
     });
 
@@ -51,7 +90,8 @@ export class ProjectService {
     if (payload.title !== undefined) project.title = payload.title;
     if (payload.description !== undefined) project.description = payload.description;
     if (payload.ownerId !== undefined) {
-      project.owner = await this.userService.findById(payload.ownerId);
+      const owner = await this.userService.findById(payload.ownerId);
+      if (owner !== null) project.ownerId = owner.id;
     }
 
     return await this.projectRepo.save(project);
@@ -72,7 +112,13 @@ export class ProjectService {
 
     project.title = payload.title;
     project.description = payload.description;
-    project.owner = await this.userService.findById(payload.ownerId);
+
+    if (payload.ownerId !== undefined) {
+      const owner = await this.userService.findById(payload.ownerId);
+      project.ownerId = owner ? owner.id : undefined;
+    } else {
+      project.ownerId = undefined;
+    }
 
     return await this.projectRepo.save(project);
   }

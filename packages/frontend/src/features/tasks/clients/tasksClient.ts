@@ -1,0 +1,36 @@
+import { apiFetch } from '../../../shared/clients/apiClient';
+import { toURLSearchParams } from '../../../shared/utils';
+import {
+  paginatedTasksSchema,
+  taskSchema,
+  type Task,
+  type TasksQuery,
+  type PaginatedTasks,
+  type CreateTaskValues,
+  type TaskStatus,
+} from '../schemas';
+
+async function getPaginated(query: TasksQuery): Promise<PaginatedTasks> {
+  const params = toURLSearchParams(query).toString();
+  return apiFetch(`/tasks?${params}`, paginatedTasksSchema);
+}
+
+async function create(data: CreateTaskValues): Promise<Task> {
+  return apiFetch('/tasks', taskSchema, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+async function patchStatus(taskId: string, status: TaskStatus): Promise<Task> {
+  return apiFetch(`/tasks/${taskId}`, taskSchema, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  });
+}
+
+export const tasksClient = {
+  getPaginated,
+  create,
+  patchStatus,
+};

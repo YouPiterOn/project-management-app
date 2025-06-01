@@ -62,7 +62,8 @@ export class TaskService {
     if (payload.status !== undefined) task.status = payload.status;
 
     if (payload.assigneeId !== undefined) {
-      task.assignee = await this.userService.findById(payload.assigneeId);
+      const assignee = await this.userService.findById(payload.assigneeId);
+      if (assignee !== null) task.assigneeId = assignee.id;
     }
 
     return await this.taskRepo.save(task);
@@ -82,9 +83,13 @@ export class TaskService {
     task.title = payload.title;
     task.description = payload.description;
     task.status = payload.status;
-    task.assignee = payload.assigneeId
-      ? await this.userService.findById(payload.assigneeId)
-      : undefined;
+
+    if (payload.assigneeId !== undefined) {
+      const assignee = await this.userService.findById(payload.assigneeId);
+      task.assigneeId = assignee ? assignee.id : undefined;
+    } else {
+      task.assigneeId = undefined;
+    }
 
     return await this.taskRepo.save(task);
   }
@@ -100,7 +105,21 @@ export class TaskService {
     const skip = (page - 1) * pageSize;
 
     const [tasks, totalItems] = await this.taskRepo.findAndCount({
-      select: ['id', 'title', 'description', 'projectId', 'assigneeId', 'status'],
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+        assignee: {
+          id: true,
+          name: true,
+        },
+      },
+      relations: {
+        assignee: true,
+      },
       where: filters,
       skip,
       take: pageSize,

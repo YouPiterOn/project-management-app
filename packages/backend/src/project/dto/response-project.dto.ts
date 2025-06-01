@@ -1,4 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { PaginatedTask } from 'src/task/dto/response-paginated-tasks.dto';
 
 export class ResponseProjectDto {
   @ApiProperty()
@@ -18,4 +19,7 @@ export class ResponseProjectDto {
 
   @ApiProperty()
   updatedAt: Date;
+
+  @ApiPropertyOptional({ type: PaginatedTask, isArray: true })
+  tasks?: PaginatedTask[];
 }
