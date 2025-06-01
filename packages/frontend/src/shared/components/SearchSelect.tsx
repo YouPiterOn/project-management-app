@@ -119,19 +119,19 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
     }, []);
 
     return (
-      <div className="w-full" ref={containerRef}>
-        {label && <label className="block text-sm font-medium mb-2">{label}</label>}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <div className='w-full' ref={containerRef}>
+        {label && <label className='block text-sm font-medium mb-2'>{label}</label>}
+        <div className='relative'>
+          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground' />
           <input
             ref={ref}
-            type="text"
+            type='text'
             value={inputValue}
             onChange={handleInputChange}
             onFocus={handleFocus}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="
+            className='
               w-full pl-10 pr-16 py-3
               border rounded-xl shadow-sm
               bg-background
@@ -139,17 +139,17 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
               placeholder:text-muted-foreground
               focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent
               disabled:opacity-50 disabled:cursor-not-allowed
-            "
+            '
             {...props}
           />
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+          <div className='absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1'>
             {showClearButton && (inputValue || selectedOption) && (
               <button
-                type="button"
+                type='button'
                 onClick={handleClear}
-                className="p-1 hover:bg-muted rounded-md transition-colors"
+                className='p-1 hover:bg-muted rounded-md transition-colors'
               >
-                <X className="h-4 w-4 text-muted-foreground" />
+                <X className='h-4 w-4 text-muted-foreground' />
               </button>
             )}
             <ChevronDown
@@ -158,7 +158,7 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
           </div>
 
           {isOpen && (
-            <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-xl shadow-lg max-h-60 overflow-auto">
+            <div className='absolute z-50 w-full mt-1 bg-background border border-border rounded-xl shadow-lg max-h-60 overflow-auto'>
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(option => (
                   <div
@@ -174,7 +174,7 @@ export const SearchSelect = forwardRef<HTMLInputElement, SearchSelectProps>(
                   </div>
                 ))
               ) : (
-                <div className="px-4 py-3 text-muted-foreground text-sm">No options found</div>
+                <div className='px-4 py-3 text-muted-foreground text-sm'>No options found</div>
               )}
             </div>
           )}

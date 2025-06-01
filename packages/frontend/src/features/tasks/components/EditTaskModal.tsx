@@ -39,7 +39,7 @@ export function EditTaskModal({ task, onSuccess, onCancel }: EditTaskModalProps)
     },
   });
 
-  const { mutate, isPending, error } = useMutation({
+  const updateMutation = useMutation({
     mutationFn: (data: CreateTaskFormValues) =>
       tasksClient.update(task.id, {
         title: data.title,
@@ -53,22 +53,33 @@ export function EditTaskModal({ task, onSuccess, onCancel }: EditTaskModalProps)
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () => tasksClient.remove(task.id),
+    onSuccess: () => {
+      onSuccess();
+      reset();
+    },
+  });
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-background p-6 rounded-xl shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Edit Task</h2>
-        <form onSubmit={handleSubmit(values => mutate(values))} className="space-y-4">
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
+      <div className='bg-background p-6 rounded-xl shadow-lg w-full max-w-md'>
+        <h2 className='text-xl font-bold mb-4'>Edit Task</h2>
+        <form
+          onSubmit={handleSubmit(values => updateMutation.mutate(values))}
+          className='space-y-4'
+        >
           <FormField
-            id="title"
-            label="Title"
-            type="text"
+            id='title'
+            label='Title'
+            type='text'
             error={errors.title}
             register={register('title')}
           />
 
           <FormTextarea
-            id="description"
-            label="Description"
+            id='description'
+            label='Description'
             rows={4}
             error={errors.description}
             register={register('description')}
@@ -77,8 +88,8 @@ export function EditTaskModal({ task, onSuccess, onCancel }: EditTaskModalProps)
           <UserSearchSelect onSelect={value => setAssigneeId(value)} />
 
           <Select
-            id="status"
-            label="Status"
+            id='status'
+            label='Status'
             value={newStatus}
             onChange={e => setNewStatus(e.target.value as TaskStatus)}
           >
@@ -89,24 +100,39 @@ export function EditTaskModal({ task, onSuccess, onCancel }: EditTaskModalProps)
             ))}
           </Select>
 
-          {error && (
-            <p className="text-sm text-destructive text-center">
-              {error instanceof Error ? error.message : 'An unexpected error occurred.'}
+          {updateMutation.error && (
+            <p className='text-sm text-destructive text-center'>
+              {updateMutation.error instanceof Error
+                ? updateMutation.error.message
+                : 'An unexpected error occurred.'}
             </p>
           )}
 
-          <div className="flex justify-end gap-2">
-            <Button
-              type="button"
-              onClick={() => {
-                onCancel();
-                reset();
-              }}
-              variant="outline"
-            >
-              Cancel
+          {deleteMutation.error && (
+            <p className='text-sm text-destructive text-center'>
+              {deleteMutation.error instanceof Error
+                ? deleteMutation.error.message
+                : 'An unexpected error occurred.'}
+            </p>
+          )}
+
+          <div className='flex flex-row justify-between'>
+            <Button type='button' variant='destructive' onClick={() => deleteMutation.mutate()}>
+              {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
             </Button>
-            <Button type="submit">{isPending ? 'Saving...' : 'Save'}</Button>
+            <div className='flex gap-2'>
+              <Button
+                type='button'
+                onClick={() => {
+                  onCancel();
+                  reset();
+                }}
+                variant='outline'
+              >
+                Cancel
+              </Button>
+              <Button type='submit'>{updateMutation.isPending ? 'Saving...' : 'Save'}</Button>
+            </div>
           </div>
         </form>
       </div>

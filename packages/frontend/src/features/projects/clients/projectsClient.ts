@@ -1,4 +1,5 @@
 import { apiFetch } from '../../../shared/clients/apiClient';
+import { emptySchema } from '../../../shared/schemas';
 import { toURLSearchParams } from '../../../shared/utils';
 import {
   createProjectResponseSchema,
@@ -31,8 +32,15 @@ async function create(data: CreateProjectValues) {
   });
 }
 
+async function remove(projectId: string) {
+  return apiFetch(`/projects/${projectId}`, emptySchema, {
+    method: 'DELETE',
+  });
+}
+
 export const projectsClient = {
   getPaginated,
   getByIdWithTasks,
   create,
+  remove,
 };

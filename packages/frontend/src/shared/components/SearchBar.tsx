@@ -27,16 +27,16 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
     };
 
     return (
-      <div className="w-full">
-        {label && <label className="block text-sm font-medium mb-2">{label}</label>}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <div className='w-full'>
+        {label && <label className='block text-sm font-medium mb-2'>{label}</label>}
+        <div className='relative'>
+          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground' />
           <input
             ref={ref}
-            type="search"
+            type='search'
             value={currentValue}
             onChange={handleChange}
-            className="
+            className='
               w-full pl-10 pr-10 py-3
               border rounded-xl shadow-sm
               bg-background
@@ -44,16 +44,16 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
               placeholder:text-muted-foreground
               focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent
               disabled:opacity-50 disabled:cursor-not-allowed
-            "
+            '
             {...props}
           />
           {showClearButton && currentValue && (
             <button
-              type="button"
+              type='button'
               onClick={handleClear}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-muted rounded-md transition-colors"
+              className='absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-muted rounded-md transition-colors'
             >
-              <X className="h-4 w-4 text-muted-foreground" />
+              <X className='h-4 w-4 text-muted-foreground' />
             </button>
           )}
         </div>

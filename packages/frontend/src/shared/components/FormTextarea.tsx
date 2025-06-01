@@ -19,16 +19,16 @@ export function FormTextarea({
 }: FormTextareaProps) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="block text-sm font-medium mb-1">
+      <label htmlFor={id} className='block text-sm font-medium mb-1'>
         {label}
       </label>
       <textarea
         id={id}
         rows={rows}
         {...register}
-        className="w-full border rounded-md px-3 py-2 text-sm"
+        className='w-full border rounded-md px-3 py-2 text-sm'
       />
-      {error && <p className="text-destructive text-xs mt-1">{error.message}</p>}
+      {error && <p className='text-destructive text-xs mt-1'>{error.message}</p>}
     </div>
   );
 }

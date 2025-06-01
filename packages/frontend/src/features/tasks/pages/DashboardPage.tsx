@@ -33,9 +33,9 @@ export function DashboardPage() {
   });
 
   return (
-    <div className="w-full max-w-5xl">
-      <div className="flex flex-row justify-between mb-4">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">My Tasks</h1>
+    <div className='w-full max-w-5xl'>
+      <div className='flex flex-row justify-between mb-4'>
+        <h1 className='text-3xl font-bold tracking-tight mb-2'>My Tasks</h1>
       </div>
 
       <TaskBoard

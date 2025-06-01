@@ -44,16 +44,16 @@ export default function TaskBoard({
 
   if (isError) {
     return (
-      <div className="text-destructive text-sm">Failed to load tasks. Please try again later.</div>
+      <div className='text-destructive text-sm'>Failed to load tasks. Please try again later.</div>
     );
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className='flex flex-col'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         <TaskColumn
-          title="To Do"
-          icon={<AlertCircle className="h-5 w-5" />}
+          title='To Do'
+          icon={<AlertCircle className='h-5 w-5' />}
           count={todoTasks.length}
           onDrop={e => handleDrop(e, 'todo')}
         >
@@ -79,8 +79,8 @@ export default function TaskBoard({
         </TaskColumn>
 
         <TaskColumn
-          title="In Progress"
-          icon={<Clock className="h-5 w-5" />}
+          title='In Progress'
+          icon={<Clock className='h-5 w-5' />}
           count={inProgressTasks.length}
           onDrop={e => handleDrop(e, 'in_progress')}
         >
@@ -106,8 +106,8 @@ export default function TaskBoard({
         </TaskColumn>
 
         <TaskColumn
-          title="Done"
-          icon={<CheckCircle2 className="h-5 w-5" />}
+          title='Done'
+          icon={<CheckCircle2 className='h-5 w-5' />}
           count={doneTasks.length}
           onDrop={e => handleDrop(e, 'done')}
         >

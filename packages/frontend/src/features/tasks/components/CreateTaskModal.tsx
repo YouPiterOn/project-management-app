@@ -50,21 +50,21 @@ export function CreateTaskModal({ projectId, onSuccess }: CreateTaskModalProps) 
       <Button onClick={() => setIsOpen(true)}>Create New Task</Button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-background p-6 rounded-xl shadow-lg w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">New Task</h2>
-            <form onSubmit={handleSubmit(values => mutate(values))} className="space-y-4">
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
+          <div className='bg-background p-6 rounded-xl shadow-lg w-full max-w-md'>
+            <h2 className='text-xl font-bold mb-4'>New Task</h2>
+            <form onSubmit={handleSubmit(values => mutate(values))} className='space-y-4'>
               <FormField
-                id="title"
-                label="Title"
-                type="text"
+                id='title'
+                label='Title'
+                type='text'
                 error={errors.title}
                 register={register('title')}
               />
 
               <FormTextarea
-                id="description"
-                label="Description"
+                id='description'
+                label='Description'
                 rows={4}
                 error={errors.description}
                 register={register('description')}
@@ -73,24 +73,24 @@ export function CreateTaskModal({ projectId, onSuccess }: CreateTaskModalProps) 
               <UserSearchSelect onSelect={value => setAssigneeId(value)} />
 
               {error && (
-                <p className="text-sm text-destructive text-center">
+                <p className='text-sm text-destructive text-center'>
                   {error instanceof Error ? error.message : 'An unexpected error occurred.'}
                 </p>
               )}
 
-              <div className="flex justify-end gap-2">
+              <div className='flex justify-end gap-2'>
                 <Button
-                  type="button"
+                  type='button'
                   onClick={() => {
                     setIsOpen(false);
                     reset();
                     setAssigneeId(null);
                   }}
-                  variant="outline"
+                  variant='outline'
                 >
                   Cancel
                 </Button>
-                <Button type="submit">{isPending ? 'Creating...' : 'Create'}</Button>
+                <Button type='submit'>{isPending ? 'Creating...' : 'Create'}</Button>
               </div>
             </form>
           </div>

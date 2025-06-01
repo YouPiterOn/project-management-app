@@ -28,7 +28,7 @@ export function ProjectSearchBar({
   return (
     <SearchBar
       showClearButton={false}
-      placeholder="Search title..."
+      placeholder='Search title...'
       value={inputValue}
       onChange={e => setInputValue(e.target.value)}
     />

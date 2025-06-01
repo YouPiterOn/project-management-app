@@ -41,12 +41,12 @@ export function UserSearchSelect({ onSelect }: { onSelect: (id: string) => void 
 
   return (
     <SearchSelect
-      label="Assign to"
+      label='Assign to'
       options={options}
       value={inputValue}
       onSelect={option => onSelect(option.value)}
       onValueChange={value => setInputValue(value)}
-      placeholder="Search by email"
+      placeholder='Search by email'
     />
   );
 }

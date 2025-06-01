@@ -36,8 +36,8 @@ export const Checkbox = ({
   const sizes = sizeClasses[size];
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="relative flex items-center">
+    <div className='flex items-center gap-3'>
+      <div className='relative flex items-center'>
         <div
           className={`
               ${sizes.checkbox}
@@ -62,7 +62,7 @@ export const Checkbox = ({
       </div>
 
       {label && (
-        <div className="flex-1 min-w-0">
+        <div className='flex-1 min-w-0'>
           {label && (
             <p
               className={`

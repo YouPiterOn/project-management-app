@@ -24,58 +24,58 @@ export function SignUpPage() {
   });
 
   return (
-    <div className="w-full max-w-md bg-background rounded-xl shadow-sm p-8">
-      <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
+    <div className='w-full max-w-md bg-background rounded-xl shadow-sm p-8'>
+      <h1 className='text-2xl font-bold text-center mb-6'>Sign Up</h1>
 
       <form
         onSubmit={handleSubmit(values => mutate(values))}
-        className="flex flex-col space-y-4 justify-center"
+        className='flex flex-col space-y-4 justify-center'
       >
         <FormField
-          id="name"
-          label="Name"
-          type="text"
+          id='name'
+          label='Name'
+          type='text'
           register={register('name')}
           error={errors.name}
         />
 
         <FormField
-          id="email"
-          label="Email"
-          type="email"
+          id='email'
+          label='Email'
+          type='email'
           register={register('email')}
           error={errors.email}
         />
 
         <FormField
-          id="password"
-          label="Password"
-          type="password"
+          id='password'
+          label='Password'
+          type='password'
           register={register('password')}
           error={errors.password}
         />
 
         {error && (
-          <p className="text-sm text-destructive text-center">
+          <p className='text-sm text-destructive text-center'>
             {error instanceof Error ? error.message : 'An unexpected error occurred.'}
           </p>
         )}
 
-        <Button type="submit" size="lg" disabled={isPending}>
+        <Button type='submit' size='lg' disabled={isPending}>
           {isPending ? 'Signing up...' : 'Sign Up'}
         </Button>
       </form>
 
-      <p className="text-sm text-center text-muted-foreground mt-6">
+      <p className='text-sm text-center text-muted-foreground mt-6'>
         Already have an account?{' '}
-        <LinkButton to="/signin" variant="link">
+        <LinkButton to='/signin' variant='link'>
           Sign in
         </LinkButton>
       </p>
 
-      <div className="text-center">
-        <LinkButton to="/" variant="link">
-          <ArrowLeft className="h-4 w-4" />
+      <div className='text-center'>
+        <LinkButton to='/' variant='link'>
+          <ArrowLeft className='h-4 w-4' />
           Home
         </LinkButton>
       </div>

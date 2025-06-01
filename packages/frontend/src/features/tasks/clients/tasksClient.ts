@@ -1,4 +1,5 @@
 import { apiFetch } from '../../../shared/clients/apiClient';
+import { emptySchema } from '../../../shared/schemas';
 import { toURLSearchParams } from '../../../shared/utils';
 import {
   paginatedTasksSchema,
@@ -37,6 +38,12 @@ async function update(
   });
 }
 
+async function remove(taskId: string) {
+  return apiFetch(`/tasks/${taskId}`, emptySchema, {
+    method: 'DELETE',
+  });
+}
+
 async function patchStatus(taskId: string, status: TaskStatus): Promise<Task> {
   return apiFetch(`/tasks/${taskId}`, taskSchema, {
     method: 'PATCH',
@@ -48,5 +55,6 @@ export const tasksClient = {
   getPaginated,
   create,
   update,
+  remove,
   patchStatus,
 };

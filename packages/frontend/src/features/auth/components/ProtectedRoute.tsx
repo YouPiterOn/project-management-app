@@ -7,5 +7,5 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (isVerifying) return <LoadingPage />;
 
-  return user ? children : <Navigate to="/signin" replace />;
+  return user ? children : <Navigate to='/signin' replace />;
 }

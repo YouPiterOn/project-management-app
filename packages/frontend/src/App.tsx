@@ -28,7 +28,7 @@ const router = createBrowserRouter(
           </HeaderLayout>
         }
       >
-        <Route path="/" element={<HomePage />} />
+        <Route path='/' element={<HomePage />} />
         <Route
           element={
             <ProtectedRoute>
@@ -36,9 +36,9 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         >
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/projects" element={<ProjectListPage />} />
-          <Route path="/projects/:projectId" element={<ProjectPage />} />
+          <Route path='/dashboard' element={<DashboardPage />} />
+          <Route path='/projects' element={<ProjectListPage />} />
+          <Route path='/projects/:projectId' element={<ProjectPage />} />
         </Route>
       </Route>
 
@@ -49,9 +49,9 @@ const router = createBrowserRouter(
           </DefaultLayout>
         }
       >
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path='/signup' element={<SignUpPage />} />
+        <Route path='/signin' element={<SignInPage />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Route>
     </>,
   ),
