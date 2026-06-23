@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "packageManager": "yarn@4.5.2",
+  "packageManager": "yarn@4.16.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nest start --watch",
     "build": "cross-env NODE_ENV=production nest build",

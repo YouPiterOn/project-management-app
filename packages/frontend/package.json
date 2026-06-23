@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "packageManager": "yarn@4.5.2",
+  "packageManager": "yarn@4.16.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host --mode development",
