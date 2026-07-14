@@ -4,6 +4,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nest start --watch",
     "build": "cross-env NODE_ENV=production nest build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
     "lint": "eslint 'src/**/*.{ts,js}'",
     "lint:fix": "eslint 'src/**/*.{ts,js}' --fix"
   },
@@ -32,9 +35,11 @@
   "devDependencies": {
     "@nestjs/cli": "^11.0.7",
     "@nestjs/schematics": "^11.0.5",
+    "@nestjs/testing": "^11.1.28",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1",
     "@types/express": "^5.0.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.15.18",
     "@types/passport": "^0",
     "@types/passport-jwt": "^4",
@@ -43,6 +48,8 @@
     "cross-env": "^7.0.3",
     "eslint": "^9.27.0",
     "eslint-plugin-nestjs": "^1.2.3",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
